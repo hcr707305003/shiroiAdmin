@@ -1,0 +1,68 @@
+version: '3.9'
+services:
+    mysql:
+        image: mysql:5.7.26
+        environment:
+            - TZ=Asia/Shanghai
+            - MYSQL_ROOT_PASSWORD=root
+            # - MYSQL_DATABASE=shiroi_admin
+            # - MYSQL_USER=shiroi
+            # - MYSQL_PASSWORD=root
+        container_name: shiroi-admin-mysql
+        command: 
+            --innodb_buffer_pool_size=1G 
+            --innodb_log_buffer_size=256M 
+            --innodb_thread_concurrency=0
+            --bind-address=0.0.0.0
+            --character-set-server=utf8mb4
+            --lower_case_table_names=1
+        restart: always
+        volumes:
+            - ./docker/mysql/5.7.26/mysql.ini:/etc/mysql/my.cnf
+            - ./docker/mysql/5.7.26/data:/var/lib/mysql # 挂载数据件目录
+        ports:
+            - "3306:3306" #外部的端口号:内部的端口号
+        networks:
+            - shiroi-admin
+    ubuntu_redis:
+        image: redis:6.2.5
+        environment:
+            - TZ=Asia/Shanghai
+        container_name: shiroi-admin-redis
+        restart: always
+        networks:
+            - shiroi-admin
+    web:
+        image: shiroi-admin-web
+        container_name: shiroi-admin-web
+        ports:
+            - "9001:80" # Docker容器端口
+        environment:
+            - TZ=Asia/Shanghai
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.4'
+                    memory: 1G
+                reservations:
+                    cpus: '0.2'
+                    memory: 200M
+        build:
+            context: ./.
+            dockerfile: dockerfile
+            cache_from:
+                - shiroi-admin-web:latest # 这是自定义的镜像缓存，用于docker build时不会重新下载扩展
+        volumes:
+            - .:/var/www/html # 文件映射，即代码共享
+
+            - ./docker/apache2/apache2.conf:/etc/apache2/apache2.conf #映射apache文件
+            - ./docker/apache2/vhosts/.:/etc/apache2/vhosts #映射子目录
+            - ./docker/log/apache2/.:/var/log/apache2 #映射apache访问日志
+
+            - ./docker/php/7.4/php.ini:/usr/local/etc/php/php.ini #映射php配置
+        restart: always
+        networks:
+            - shiroi-admin
+networks:
+    shiroi-admin:
+#        driver: bridge

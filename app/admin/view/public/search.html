@@ -1,0 +1,46 @@
+<div class="col-12">
+    <div class="card">
+        {if $show_index_input}
+        <div class="card-header dataSearch">
+
+            <form class="searchForm form-inline" id="searchForm" action="{:url('index')}" method="get">
+                {foreach name='show_index_input' item='value' key='i'}
+                    <!-- 搜索类型为string -->
+                    {if is_string($value) }
+                        <input value="{$_GET[$i]|default=''}" id="{$i}_input" name="{$i}" class="form-control input-sm" placeholder="{$value}">
+                    <!-- 搜索类型为array -->
+                    {elseif is_array($value) }
+                        {if isset($value['type']) }
+                            <!-- 类型为select|switch -->
+                            {if ($value['type'] == 'select') || ($value['type'] == 'switch') }
+                                {if isset($value['option']) }
+                                    <select name="{$i}" id="{$i}" class="form-control select2bs4 fieldSelect" data-placeholder="{$value['title']?:$i}">
+                                        <option value=''></option>
+                                        {foreach name='value.option' item='v1' key='v2'}
+                                            <option value="{$v2}" {if isset($_GET[$i]) && ($_GET[$i] == $v2)}selected{/if}>{$v1}</option>
+                                        {/foreach}
+                                    </select>
+                                    <script>$("#{$i}").select2({theme: 'bootstrap4'});</script>
+                                {/if}
+                            {else}
+                                <input value="{$_GET[$i]|default=''}" name="{$i}" class="form-control input-sm" placeholder="{$value}">
+                            {/if}
+                        {/if}
+                    {/if}
+
+                {/foreach}
+                <div class="input-group input-group-sm searchGroup">
+                    <button class="btn btn-sm btn-primary" style="margin: 0 10px" type="submit">
+                        <i class="fa fa-search"></i>查询
+                    </button>
+                </div>
+                <div class="form-group searchGroup">
+                    <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
+                            class="fa  fa-eraser"></i> 清空查询
+                    </button>
+                </div>
+            </form>
+        </div>
+        {/if}
+    </div>
+</div>

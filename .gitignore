@@ -1,0 +1,13 @@
+vendor
+runtime
+.ENV
+composer.phar
+composer.lock
+Thumbs.db
+*.DS_Store
+.idea
+.vscode
+import
+docker/mysql/5.7.26/data
+docker/log/apache2
+public/uploads/uploads
