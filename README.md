@@ -3,21 +3,20 @@
 
 ## 安装步骤
   - ### 本地安装
-    1. ##### 安装依赖
+    1. ##### 复制`env`文件
+        ```shell
+        copy .example.env .env   
+        ```
+    2. ##### 安装依赖
         ```shell
         composer install
         ```
 
-    2. ##### 创建数据库
+    3. ##### 创建数据库
         使用navicat工具或命令创建数据库，注意编码必须为`utf8mb4`格式，例如：
         ~~~sql
         create database if not exists `shiroi_admin` default character set utf8mb4 collate utf8mb4_unicode_ci;
         ~~~
-
-    3. ##### 复制`env`文件
-        ```shell
-        copy .example.env .env   
-        ```
     4. ##### 修改`env`文件的数据库配置(详细可以看.example.env)
        - 如果是docker连接的话,这里是镜像名(shiroi-admin-mysql)或者是局域网ip
        - 可自定义数据库数据库配置，如果为local，则引入的是LOCAL_DATABASE项，如果为docker，则引入的是DOCKER_DATABASE(可以自定义数据库连接，对应需要配置相关数据库配置)
