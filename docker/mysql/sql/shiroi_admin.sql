@@ -25,8 +25,7 @@ create database if not exists `shiroi_admin` default character set utf8mb4 colla
 -- ----------------------------
 -- Table structure for admin_log
 -- ----------------------------
-DROP TABLE IF EXISTS `admin_log`;
-CREATE TABLE `admin_log`  (
+CREATE TABLE IF NOT EXISTS `admin_log`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `admin_user_id` int(10) UNSIGNED NOT NULL COMMENT '用户',
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '操作',
@@ -46,7 +45,7 @@ CREATE TABLE `admin_log`  (
 -- ----------------------------
 -- Table structure for admin_log_data
 -- ----------------------------
-CREATE TABLE IF EXISTS `admin_log_data`  (
+CREATE TABLE IF NOT EXISTS `admin_log_data`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `admin_log_id` int(10) UNSIGNED NOT NULL COMMENT '日志ID',
   `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '日志内容',
@@ -63,7 +62,7 @@ CREATE TABLE IF EXISTS `admin_log_data`  (
 -- ----------------------------
 -- Table structure for admin_menu
 -- ----------------------------
-CREATE TABLE IF EXISTS `admin_menu`  (
+CREATE TABLE IF NOT EXISTS `admin_menu`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '唯一标识',
   `parent_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '父级菜单',
@@ -155,7 +154,7 @@ INSERT INTO `admin_menu` VALUES (67, '02fc5c7f3bf8f7c63368dd080487acff', 62, '�
 -- ----------------------------
 -- Table structure for admin_role
 -- ----------------------------
-CREATE TABLE IF EXISTS `admin_role`  (
+CREATE TABLE IF NOT EXISTS `admin_role`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
   `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
@@ -175,7 +174,7 @@ INSERT INTO `admin_role` VALUES (1, '管理员', '后台管理员角色', '16,17
 -- ----------------------------
 -- Table structure for admin_user
 -- ----------------------------
-CREATE TABLE IF EXISTS `admin_user`  (
+CREATE TABLE IF NOT EXISTS `admin_user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'JDJ5JDEwJHVPVDZXN0NQcTVIemkyd3BHUHNSZGVWR2V1NlVaMk5CYTVETVdkMjF4blFuYXNOaWU0RXFT' COMMENT '密码',
@@ -199,7 +198,7 @@ INSERT INTO `admin_user` VALUES (2, 'super_admin', 'JDJ5JDEwJEwuYVlzSHhhdTU1Qm9V
 -- ----------------------------
 -- Table structure for migrations
 -- ----------------------------
-CREATE TABLE IF EXISTS `migrations`  (
+CREATE TABLE IF NOT EXISTS `migrations`  (
   `version` bigint(20) NOT NULL,
   `migration_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `start_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
@@ -225,7 +224,7 @@ INSERT INTO `migrations` VALUES (20210908031808, 'Test', '2023-08-05 17:14:16', 
 -- ----------------------------
 -- Table structure for setting
 -- ----------------------------
-CREATE TABLE IF EXISTS `setting`  (
+CREATE TABLE IF NOT EXISTS `setting`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `setting_group_id` int(10) NOT NULL DEFAULT 0 COMMENT '所属分组',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
@@ -252,7 +251,7 @@ INSERT INTO `setting` VALUES (6, 2, '七牛云', '七牛云配置', 'qiniuyun', 
 -- ----------------------------
 -- Table structure for setting_group
 -- ----------------------------
-CREATE TABLE IF EXISTS `setting_group`  (
+CREATE TABLE IF NOT EXISTS `setting_group`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `module` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '作用模块',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
@@ -277,7 +276,7 @@ INSERT INTO `setting_group` VALUES (2, 'api', '前台设置', '前台管理方�
 -- ----------------------------
 -- Table structure for test
 -- ----------------------------
-CREATE TABLE IF EXISTS `test`  (
+CREATE TABLE IF NOT EXISTS `test`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '/static/index/images/avatar.png' COMMENT '头像',
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
@@ -303,7 +302,7 @@ CREATE TABLE IF EXISTS `test`  (
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
-CREATE TABLE IF EXISTS `user`  (
+CREATE TABLE IF NOT EXISTS `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_level_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户等级',
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '账号',
@@ -335,7 +334,7 @@ INSERT INTO `user` VALUES (10, 1, '10005', 'JDJ5JDEwJHBiRFJiN3BJbE9UWi5wZWJRYWxS
 -- ----------------------------
 -- Table structure for user_level
 -- ----------------------------
-CREATE TABLE IF EXISTS `user_level`  (
+CREATE TABLE IF NOT EXISTS `user_level`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
   `description` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
