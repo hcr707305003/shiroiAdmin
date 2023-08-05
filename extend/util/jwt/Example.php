@@ -1,7 +1,7 @@
 <?php
 /**
  * jwt调用示例
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 declare (strict_types=1);

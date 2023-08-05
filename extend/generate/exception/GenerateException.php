@@ -1,7 +1,7 @@
 <?php
 /**
  * 代码生成异常
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 declare (strict_types=1);

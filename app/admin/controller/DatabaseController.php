@@ -2,7 +2,7 @@
 /**
  * 数据库控制器
  * @desc 没有加备份/恢复数据库的功能，防止数据泄漏或误操作
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 declare (strict_types=1);

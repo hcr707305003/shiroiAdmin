@@ -1,7 +1,7 @@
 <?php
 /**
  * api模块公共函数
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 use think\response\Json;

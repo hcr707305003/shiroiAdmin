@@ -1,7 +1,7 @@
 <?php
 /**
  * jwt异常类
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 declare (strict_types=1);

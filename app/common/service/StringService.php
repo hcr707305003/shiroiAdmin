@@ -1,7 +1,7 @@
 <?php
 /**
  * 字符串相关service
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 declare (strict_types=1);

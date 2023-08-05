@@ -1,7 +1,7 @@
 <?php
 /**
  * 验证码配置
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 return [

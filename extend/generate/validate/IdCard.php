@@ -1,7 +1,7 @@
 <?php
 /**
  * 身份证号码 18位
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 declare (strict_types=1);

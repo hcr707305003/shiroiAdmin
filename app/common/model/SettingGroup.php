@@ -1,7 +1,7 @@
 <?php
 /**
  * 设置分组模型
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 namespace app\common\model;

@@ -1,7 +1,7 @@
 <?php
 /**
  * 后台公共函数文件
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 use app\admin\exception\AdminServiceException;

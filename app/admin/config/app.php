@@ -1,7 +1,7 @@
 <?php
 /**
  * app配置
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 $config = [

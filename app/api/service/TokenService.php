@@ -2,7 +2,7 @@
 /**
  * Token Service
  * 当前默认用HS256加密，可自行修改为RS256或者其他
- * @author yupoxiong<i@yupoxiong.com>
+ * @author shiroi <707305003@qq.com>
  */
 
 declare (strict_types=1);
