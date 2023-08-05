@@ -5,9 +5,9 @@ services:
         environment:
             - TZ=Asia/Shanghai
             - MYSQL_ROOT_PASSWORD=root
-            # - MYSQL_DATABASE=shiroi_admin
-            # - MYSQL_USER=shiroi
-            # - MYSQL_PASSWORD=root
+            - MYSQL_DATABASE=shiroi_admin
+            - MYSQL_USER=shiroi
+            - MYSQL_PASSWORD=root
         container_name: shiroi-admin-mysql
         command: 
             --innodb_buffer_pool_size=1G 
@@ -16,7 +16,6 @@ services:
             --bind-address=0.0.0.0
             --character-set-server=utf8mb4
             --lower_case_table_names=1
-            --init-file /docker-entrypoint-initdb.d/init.sql
         restart: always
         volumes:
             - ./docker/mysql/sql:/docker-entrypoint-initdb.d # 初始化sql脚本件目录
