@@ -23,7 +23,7 @@ return [
             // 数据库类型
             'type'              => env($environment_active.'database.type', 'mysql'),
             // 服务器地址
-            'hostname'          => env($environment_active.'database.hostname', '127.0.0.1'),
+            'hostname'          => env($environment_active.'database.hostname', 'shiroi-admin-mysql'),
             // 数据库名
             'database'          => env($environment_active.'database.database', 'shiroi_admin'),
             // 用户名

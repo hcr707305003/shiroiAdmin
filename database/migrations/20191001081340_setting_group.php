@@ -32,7 +32,7 @@ class SettingGroup extends Migrator
 
     protected function insertData(): void
     {
-        $data = '[{"id":1,"module":"admin","name":"后台设置","description":"后台管理方面的设置","code":"admin","sort_number":1000,"icon":"fa-adjust","auto_create_menu":0,"auto_create_file":0},{"id":1,"module":"api","name":"前台设置","description":"前台管理方面的设置","code":"api","sort_number":1000,"icon":"fa-user","auto_create_menu":0,"auto_create_file":0}]';
+        $data = '[{"id":1,"module":"admin","name":"后台设置","description":"后台管理方面的设置","code":"admin","sort_number":1000,"icon":"fa-adjust","auto_create_menu":0,"auto_create_file":0},{"id":2,"module":"api","name":"前台设置","description":"前台管理方面的设置","code":"api","sort_number":1000,"icon":"fa-user","auto_create_menu":0,"auto_create_file":0}]';
 
         $msg = '配置分组导入成功.' . "\n";
         Db::startTrans();
