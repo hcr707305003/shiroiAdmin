@@ -16,8 +16,10 @@ services:
             --bind-address=0.0.0.0
             --character-set-server=utf8mb4
             --lower_case_table_names=1
+            --init-file /docker-entrypoint-initdb.d/init.sql
         restart: always
         volumes:
+            - ./docker/mysql/sql:/docker-entrypoint-initdb.d # 初始化sql脚本件目录
             - ./docker/mysql/5.7.26/mysql.ini:/etc/mysql/my.cnf
             - ./docker/mysql/5.7.26/data:/var/lib/mysql # 挂载数据件目录
         ports:

@@ -101,4 +101,10 @@ class Test1Controller extends AdminBaseController
         }
         return request()->param();
     }
+
+    //获取get参数(如果不接收参数，建议`return [];`，否则会影响到pjax)
+    protected function getParam(): array
+    {
+        return $this->filterParam(request()->get(['username', 'mobile', 'user_level_id']), 'get');
+    }
 }
