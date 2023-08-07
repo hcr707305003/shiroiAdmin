@@ -70,6 +70,8 @@ services:
             - ./docker/log/apache2/.:/var/log/apache2 #映射apache访问日志
 
             - ./docker/php/7.4/php.ini:/usr/local/etc/php/php.ini #映射php配置
+        env_file:
+            - .env
         restart: always
         networks:
             - shiroi-admin

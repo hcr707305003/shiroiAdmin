@@ -2,73 +2,71 @@
 基于`ThinkPHP6.0`+`AdminLTE3.2`的后台管理系统
 
 ## 安装步骤
+  - ### 复制`env`文件
+  ```shell
+  copy .example.env .env   
+  ```
+  - ### 安装依赖
+  ```shell
+  composer install
+  ```
+  - ### 生成密钥
+   ```shell
+   #生成APP_KEY
+   php think generate:app_key
+ 
+   #生成JWT_KEY
+   php think generate:jwt_key
+   ```
   - ### 本地安装
-    1. ##### 复制`env`文件
-        ```shell
-        copy .example.env .env   
-        ```
-    2. ##### 安装依赖
-        ```shell
-        composer install
-        ```
-
-    3. ##### 创建数据库
-        使用navicat工具或命令创建数据库，注意编码必须为`utf8mb4`格式，例如：
-        ~~~sql
-        create database if not exists `shiroi_admin` default character set utf8mb4 collate utf8mb4_unicode_ci;
-        ~~~
-    4. ##### 修改`env`文件的数据库配置(详细可以看.example.env)
-       - 如果是docker连接的话,这里是镜像名(shiroi-admin-mysql)或者是局域网ip
-       - 可自定义数据库数据库配置，如果为local，则引入的是LOCAL_DATABASE项，如果为docker，则引入的是DOCKER_DATABASE(可以自定义数据库连接，对应需要配置相关数据库配置)
-       ```ini
-        #默认空，默认连接下面DATABASE数据库配置
-        [ENVIRONMENT]
-        active = 
-        #active = docker #例：如果为docker，则连接DOCKER_DATABASE配置
-
-        [DATABASE]
-        TYPE=mysql
-        HOSTNAME=127.0.0.1
-        DATABASE=数据库名称
-        USERNAME=数据库用户名
-        PASSWORD=数据库密码
-        HOSTPORT=3306
-        CHARSET=utf8mb4
-        DEBUG=false
-
-        #注意：使用docker容器名称，使用php think 运行脚本是会报连接数据库错误（可以使用局域网ip(`ipconfig` | `ifconfig`)处理这个错误）
-        [DOCKER_DATABASE]
-        TYPE=mysql
-        HOSTNAME=shiroi-admin-mysql
-        DATABASE=shiroi_admin
-        USERNAME=root
-        PASSWORD=root
-        HOSTPORT=3306
-        CHARSET=utf8mb4
-        DEBUG=true
-       ```
-    5. ##### 数据库迁移
+    - ##### 创建数据库
+      使用navicat工具或命令创建数据库，注意编码必须为`utf8mb4`格式，例如：
+      ~~~sql
+      create database if not exists `shiroi_admin` default character set utf8mb4 collate utf8mb4_unicode_ci;
+      ~~~
+    - ##### 修改`env`文件的数据库配置(详细可以看.example.env)
+      - 如果是docker连接的话,这里是镜像名(shiroi-admin-mysql)或者是局域网ip
+      - 可自定义数据库数据库配置，如果为local，则引入的是LOCAL_DATABASE项，如果为docker，则引入的是DOCKER_DATABASE(可以自定义数据库连接，对应需要配置相关数据库配置)
+      ```ini
+       #默认空，默认连接下面DATABASE数据库配置
+       [ENVIRONMENT]
+       active = 
+       #active = docker #例：如果为docker，则连接DOCKER_DATABASE配置
+ 
+       [DATABASE]
+       TYPE=mysql
+       HOSTNAME=127.0.0.1
+       DATABASE=数据库名称
+       USERNAME=数据库用户名
+       PASSWORD=数据库密码
+       HOSTPORT=3306
+       CHARSET=utf8mb4
+       DEBUG=false
+ 
+       #注意：使用docker容器名称，使用php think 运行脚本是会报连接数据库错误（可以使用局域网ip(`ipconfig` | `ifconfig`)处理这个错误）
+       [DOCKER_DATABASE]
+       TYPE=mysql
+       HOSTNAME=shiroi-admin-mysql
+       DATABASE=shiroi_admin
+       USERNAME=root
+       PASSWORD=root
+       HOSTPORT=3306
+       CHARSET=utf8mb4
+       DEBUG=true
+      ```
+    - ##### 数据库迁移
         ```shell
         #表迁移
         php think migrate:run 
-        
+    
         #数据填充
         php think seed:run
         ```
-    6. ##### 生成密钥
-       ```shell
-       #生成APP_KEY
-       php think generate:app_key
-       
-       #生成JWT_KEY
-       php think generate:jwt_key
-       ```
-    
   - ### docker安装 (访问`http://127.0.0.1:9001`)
     ```
     //启动
     docker-compose --env-file ./docker/.env up -d --build
-    
+
     //停止
     docker-compose --env-file ./docker/.env down
 
