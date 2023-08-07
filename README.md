@@ -64,7 +64,7 @@
        php think generate:jwt_key
        ```
     
-  - ### docker安装
+  - ### docker安装 (访问`http://127.0.0.1:9001`)
     ```
     //启动
     docker-compose --env-file ./docker/.env up -d --build
