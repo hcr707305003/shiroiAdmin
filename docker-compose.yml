@@ -54,7 +54,16 @@ services:
             cache_from:
                 - shiroi-admin-web:latest # 这是自定义的镜像缓存，用于docker build时不会重新下载扩展
         volumes:
-            - .:/var/www/html # 文件映射，即代码共享
+#            - .:/var/www/html # 文件映射，即代码共享（性能优化提升差）
+
+            - ./app/.:/var/www/html/app #应用代码
+            - ./config/.:/var/www/html/config #配置
+            - ./database/.:/var/www/html/database #数据库迁移
+            - ./extend/.:/var/www/html/extend #扩展包
+            - ./public/.:/var/www/html/public #映射静态文件
+            - ./route/.:/var/www/html/route #路由
+            - ./runtime/.:/var/www/html/runtime #缓存文件
+            - ./.env:/var/www/html/.env #env环境变量
 
             - ./docker/apache2/apache2.conf:/etc/apache2/apache2.conf #映射apache文件
             - ./docker/apache2/vhosts/.:/etc/apache2/vhosts #映射子目录
