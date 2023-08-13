@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `test`  (
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_level_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户等级',
+  `user_level_id` int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '用户等级',
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '账号',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
   `mobile` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '手机号',

@@ -14,7 +14,7 @@ class User extends Migrator
     {
         $table = $this->table('user', ['comment' => '用户', 'engine' => 'InnoDB', 'encoding' => 'utf8mb4', 'collation' => 'utf8mb4_unicode_ci']);
         $table
-            ->addColumn('user_level_id', 'integer', ['signed' => false, 'limit' => 10, 'default' => 0, 'comment' => '用户等级'])
+            ->addColumn('user_level_id', 'integer', ['signed' => false, 'limit' => 10, 'default' => 1, 'comment' => '用户等级'])
             ->addColumn('username', 'string', ['limit' => 30, 'default' => '', 'comment' => '账号'])
             ->addColumn('password', 'string', ['limit' => 255, 'default' => '', 'comment' => '密码'])
             ->addColumn('mobile', 'string', ['limit' => 11, 'default' => '', 'comment' => '手机号'])
@@ -31,7 +31,7 @@ class User extends Migrator
 
     protected function insertData(): void
     {
-        $data = '[{"id":1,"user_level_id":1,"username":"putong1","password":"putong1","mobile":"18899990000","nickname":"putong1","avatar":"\/uploads\/image\/user.png","status":1},{"id":2,"user_level_id":1,"username":"putong2","password":"putong2","mobile":"18333333333","nickname":"putong2","avatar":"\/uploads\/image\/user.png","status":1},{"id":3,"user_level_id":2,"username":"baiyin1","password":"baiyin1","mobile":"13200001111","nickname":"baiyin1","avatar":"\/uploads\/image\/user.png","status":0},{"id":4,"user_level_id":2,"username":"baiyin2","password":"baiyin2","mobile":"admin","nickname":"baiyin2","avatar":"\/uploads\/image\/user.png","status":1},{"id":5,"user_level_id":3,"username":"黄金1","password":"黄金1","mobile":"黄金1","nickname":"黄金1","avatar":"\/uploads\/image\/user.png","status":1},{"id":6,"user_level_id":1,"username":"10001","password":"10001","mobile":"13200000000","nickname":"10001","avatar":"\/uploads\/image\/user.png","status":1},{"id":7,"user_level_id":2,"username":"10002","password":"10002","mobile":"13200000001","nickname":"10002","avatar":"\/uploads\/image\/user.png","status":1},{"id":8,"user_level_id":3,"username":"10003","password":"10003","mobile":"13200000002","nickname":"10003","avatar":"\/uploads\/image\/user.png","status":0},{"id":9,"user_level_id":2,"username":"10004","password":"10004","mobile":"13200000003","nickname":"10004","avatar":"\/uploads\/image\/user.png","status":0},{"id":10,"user_level_id":1,"username":"10005","password":"10005","mobile":"13200000004","nickname":"10005","avatar":"\/uploads\/image\/user.png","status":0}]';
+        $data = '[{"id":1,"user_level_id":1,"username":"putong","password":"putong","mobile":"","nickname":"putong","avatar":"\/uploads\/image\/user.png","status":0},{"id":2,"user_level_id":2,"username":"baiyin","password":"baiyin","mobile":"","nickname":"baiyin","avatar":"\/uploads\/image\/user.png","status":0},{"id":3,"user_level_id":3,"username":"huangjin","password":"huangjin","mobile":"","nickname":"huangjin","avatar":"\/uploads\/image\/user.png","status":0}]';
 
         $msg = '测试用户数据导入成功.' . "\n";
         Db::startTrans();

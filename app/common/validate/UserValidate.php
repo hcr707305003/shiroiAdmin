@@ -11,6 +11,7 @@ class UserValidate extends CommonBaseValidate
         'user_level_id|用户等级' => 'require',
         'username|账号'        => 'require',
         'password|密码'        => 'require',
+        'repassword|再次密码'   => 'require|isSamePassword',
         'mobile|手机号'         => 'require',
         'nickname|昵称'        => 'require',
         'avatar|头像'          => 'require',
@@ -42,7 +43,15 @@ class UserValidate extends CommonBaseValidate
         'api_disable'   => ['id',],
         'api_enable'    => ['id',],
         'api_login'     => ['username', 'password'],
-        'index_login'     => ['username', 'password'],
+        'index_login'   => ['username', 'password'],
+        'index_register'=> ['username', 'password', 'repassword'],
     ];
 
+    public function isSamePassword($value,$value1,$data): bool
+    {
+        if($data['password'] != $data['repassword']) {
+            return false;
+        }
+        return true;
+    }
 }

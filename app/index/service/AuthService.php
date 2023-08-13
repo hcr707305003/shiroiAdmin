@@ -12,6 +12,7 @@ namespace app\index\service;
 
 use app\common\model\User;
 use app\index\exception\IndexServiceException;
+use think\Model;
 
 class AuthService extends IndexBaseService
 {
@@ -26,13 +27,13 @@ class AuthService extends IndexBaseService
      * 用户登录
      * @param $username
      * @param $password
-     * @return User|array|\think\Model
+     * @return User|array|Model
      * @throws IndexServiceException
      */
-    public  function login($username,$password)
+    public function login($username,$password)
     {
 
-        $user     =$this->model->where('username' ,'=', $username)->findOrEmpty();
+        $user = $this->model->where('username' ,'=', $username)->findOrEmpty();
 
         if ($user->isEmpty()) {
             throw new IndexServiceException('用户不存在');
@@ -48,4 +49,26 @@ class AuthService extends IndexBaseService
         return $user;
     }
 
+    /**
+     * 用户注册
+     * @param $username
+     * @param $password
+     * @return User|Model
+     * @throws IndexServiceException
+     */
+    public function register($username,$password)
+    {
+        //判断用户名是否被占用
+        $user = $this->model->where('username' ,'=', $username)->findOrEmpty();
+
+        if($user->isExists()) {
+            throw new IndexServiceException('用户已存在，请用其他用户名注册~');
+        }
+
+        return $this->model->create([
+            'username' => $username,
+            'nickname' => $username,
+            'password' => $password,
+        ]);
+    }
 }

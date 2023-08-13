@@ -43,7 +43,7 @@ trait IndexAuthTrait
             return false;
         }
 
-        $user          = (new User)->where('id','=',$user_id)->findOrEmpty();
+        $user = (new User)->where('id','=',$user_id)->findOrEmpty();
         if($user->isEmpty()) {
             return false;
         }
