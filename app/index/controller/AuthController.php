@@ -31,10 +31,8 @@ class AuthController extends IndexBaseController
     public function login(Request $request, AuthService $service, UserValidate $validate)
     {
         $param = $request->param();
-
         //登录逻辑
         if($request->isPost()){
-
             $check = $validate->scene('index_login')->check($param);
             if (!$check) {
                 return index_error($validate->getError());
@@ -62,7 +60,6 @@ class AuthController extends IndexBaseController
     public function register(Request $request, AuthService $service, UserValidate $validate)
     {
         $param = $request->param();
-
         //登录逻辑
         if($request->isPost()){
             $check = $validate->scene('index_register')->check($param);
@@ -71,9 +68,8 @@ class AuthController extends IndexBaseController
             }
             try {
                 $user = $service->register($param['username'], $param['password']);
-                if($user->isExists()) {
-                    return $this->fetch('login');
-                }
+                self::authLogin($user,(bool)($param['remember']??false));
+                return index_success('登录成功','index/index',$user);
             } catch (IndexServiceException $e) {
                 return index_error($e->getMessage());
             }
@@ -88,7 +84,6 @@ class AuthController extends IndexBaseController
     public function logout(): Redirect
     {
         self::authLogout();
-
         return redirect(url('index/auth/login'));
     }
 }
