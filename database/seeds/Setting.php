@@ -25,42 +25,42 @@ class Setting extends Seeder
                         "name" => "后台名称",
                         "field" => "name",
                         "type" => "text",
-                        "content" => "XX后台系统",
+                        "content" => "ShiroiAdmin后台系统",
                         "option" => ""
                     ],
                     [
                         "name" => "后台简称",
                         "field" => "short_name",
                         "type" => "text",
-                        "content" => "后台",
+                        "content" => "ShiroiAdmin",
                         "option" => ""
                     ],
                     [
                         "name" => "后台作者",
                         "field" => "author",
                         "type" => "text",
-                        "content" => "xx科技",
+                        "content" => "shiroi",
                         "option" => ""
                     ],
                     [
                         "name" => "作者网站",
                         "field" => "website",
                         "type" => "text",
-                        "content" => "#",
+                        "content" => "https://hcr707305003.github.io/",
                         "option" => ""
                     ],
                     [
                         "name" => "后台版本",
                         "field" => "version",
                         "type" => "text",
-                        "content" => "0.1",
+                        "content" => "1.4",
                         "option" => ""
                     ],
                     [
                         "name" => "后台LOGO",
                         "field" => "logo",
                         "type" => "image",
-                        "content" => "\/static\/admin\/images\/logo.png",
+                        "content" => "/static/admin/images/logo.png",
                         "option" => ""
                     ]
                 ],
@@ -91,7 +91,7 @@ class Setting extends Seeder
                         "name" => "登录背景",
                         "field" => "background",
                         "type" => "image",
-                        "content" => "\/static\/admin\/images\/login-default-bg.jpg",
+                        "content" => "/static/admin/images/login-default-bg.jpg",
                         "option" => ""
                     ],
                     [
