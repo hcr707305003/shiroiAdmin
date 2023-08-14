@@ -4,28 +4,6 @@
 
 use think\facade\Config;
 
-if (!function_exists('get_setting')) {
-    /**
-     * 设置相关助手函数
-     * @param string|array $name
-     * @param null $value
-     * @return array|bool|mixed|null
-     */
-    function get_setting($name = '', $value = null)
-    {
-        if($name) {
-            if(is_string($name)) $name = explode('.',$name);
-        }
-        //获取组信息
-        $settingGroup = get_database_setting(array_shift($name));
-        //获取值
-        foreach ($name as $v) {
-            $settingGroup = $settingGroup[$v] ?? $value;
-        }
-        return $settingGroup;
-    }
-}
-
 if (!function_exists('get_file_type')) {
     /**
      * 根据文件后缀获取文件类型
@@ -54,62 +32,18 @@ if (!function_exists('setting')) {
      */
     function setting($name = '', $value = null)
     {
-        if ($value === null && is_string($name)) {
-            //获取一级配置
-            if ('.' === substr($name, -1)) {
-                $result = Config::get(substr($name, 0, -1));
-                if (count($result) === 0) {
-                    //如果文件不存在，查找数据库
-                    $result = get_database_setting(substr($name, 0, -1));
-                }
-
-                return $result;
+        if($name) {
+            //文件是否存在，不存在则查数据库
+            $settingGroup = Config::get($name);
+            if(($settingGroup === null) || ($settingGroup === [])) {
+                //获取组信息
+                $settingGroup = get_database_setting($name);
             }
-            //判断配置是否存在或读取配置
-            if (0 === strpos($name, '?')) {
-                $result = Config::has(substr($name, 1));
-                if (!$result) {
-                    //如果配置不存在，查找数据库
-                    if ($name && false === strpos($name, '.')) {
-                        return [];
-                    }
-
-                    if ('.' === substr($name, -1)) {
-
-                        return get_database_setting(substr($name, 0, -1));
-                    }
-
-                    $name_arr    = explode('.', $name);
-                    $name_arr[0] = strtolower($name_arr[0]);
-
-                    $result = get_database_setting($name_arr[0]);
-                    if ($result) {
-                        $config = $result;
-                        // 按.拆分成多维数组进行判断
-                        foreach ($name_arr as $val) {
-                            if (isset($config[$val])) {
-                                $config = $config[$val];
-                            } else {
-                                return null;
-                            }
-                        }
-
-                        return $config;
-
-                    }
-                    return $result;
-                }
-
-                return true;
+            if($settingGroup !== null) {
+                return $settingGroup;
             }
-
-            $result = Config::get($name);
-            if (!$result) {
-                $result = get_database_setting($name);
-            }
-            return $result;
         }
-        return Config::set($name, $value);
+        return $value;
     }
 
 }
@@ -118,23 +52,38 @@ if (!function_exists('get_database_setting')) {
     /**
      * 获取数据库配置
      * @param $name
-     * @return array
+     * @param null $value
+     * @return array|string
      */
-    function get_database_setting($name): array
+    function get_database_setting($name, $value = null)
     {
         $result = [];
-        $group  = (new app\common\model\SettingGroup)->where('code', $name)->findOrEmpty();
-        if (!$group->isEmpty()) {
-            $result = [];
-            foreach ($group->setting as $key => $setting) {
-                $key_setting = [];
-                foreach ($setting->content as $content) {
-                    $key_setting[$content['field']] = $content['content'];
+        if($name) {
+            if(is_string($name)) $name = explode('.',$name);
+            $group = (new app\common\model\SettingGroup)->where('code', $name[0])->findOrEmpty();
+            if ($group->isExists()) {
+                if(isset($name[1])) {
+                    $setting = (new app\common\model\Setting)->where('code',$name[1])->findOrEmpty();
+                    if($setting->isExists()) {
+                        foreach ($setting->content as $content) {
+                            $result[$content['field']] = $content['content'];
+                        }
+
+                        if(isset($name[2])) {
+                            return $result[$name[2]] ?? $value;
+                        }
+                    }
+                } else {
+                    foreach ($group->setting as $setting) {
+                        $key_setting = [];
+                        foreach ($setting->content as $content) {
+                            $key_setting[$content['field']] = $content['content'];
+                        }
+                        $result[$setting->code] = $key_setting;
+                    }
                 }
-                $result[$setting->code] = $key_setting;
             }
         }
-
         return $result;
     }
 }

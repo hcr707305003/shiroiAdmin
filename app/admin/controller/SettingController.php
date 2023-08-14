@@ -85,7 +85,7 @@ class SettingController extends AdminBaseController
             $group = (new SettingGroup)->find($result->setting_group_id);
             create_setting_file($group);
 
-            return $result ? admin_success('添加成功', $url) : admin_error();
+            return $result->isExists() ? admin_success('添加成功', $url) : admin_error();
         }
 
         $this->assign([
@@ -230,8 +230,7 @@ class SettingController extends AdminBaseController
      */
     public function all(Request $request, SettingGroup $model): string
     {
-        $param = $request->param();
-        $data  = $model->scope('where', $param)
+        $data  = $model->scope('where', $request->param())
             ->paginate([
                 'list_rows' => $this->admin['admin_list_rows'],
                 'var_page'  => 'page',
@@ -276,6 +275,26 @@ class SettingController extends AdminBaseController
     public function api(): string
     {
         return $this->show(2);
+    }
+
+    /**
+     * 对象存储设置
+     * @return string
+     * @throws Exception
+     */
+    public function cloud(): string
+    {
+        return $this->show(3);
+    }
+
+    /**
+     * 微信设置
+     * @return string
+     * @throws Exception
+     */
+    public function wechat(): string
+    {
+        return $this->show(4);
     }
 
 }//append_menu

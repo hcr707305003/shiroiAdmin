@@ -85,7 +85,7 @@
 将`public`目录配置为web根目录，然后配置URL重写规则，具体可参考 [ThinkPHP6.0完全开发手册](https://www.kancloud.cn/manual/thinkphp6_0/1037488) URL访问模块
 
 ## 访问后台
-访问`/admin`，默认开发管理员的账号为`develop_admin`，超级管理员的账号为`super_admin`，**对应密码查看迁移命令行输出内容**。
+访问`/admin`，默认开发管理员的账号为`develop_admin`，超级管理员的账号为`super_admin`，密码默认`123456`，**对应密码查看迁移命令行输出内容**。
 
 ## 重置管理员密码
 ```shell

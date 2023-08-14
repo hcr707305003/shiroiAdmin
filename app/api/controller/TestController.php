@@ -19,34 +19,8 @@ class TestController extends ApiBaseController
 
     protected array $loginExcept= [
         'api/test/index',
-        'api/test/oss',
     ];
 
-    public function oss() {
-        //上传的文件
-        $file = request()->file('file');
-
-        //实例化（默认阿里云）
-        // aliyun  => 阿里云
-        // tencent => 腾讯云
-        // qiniu   => 七牛云
-        $oss = new \app\common\plugin\Oss('aliyun');
-
-        //设置bucket
-        $oss = $oss->setBucket('mhjzjt-disk');
-
-//        //列表
-//        $list_info = $oss->get(10);
-//        dump($list_info);
-
-        //上传
-        $put_info = $oss->put('shiroi.png', $file->getPathname());
-        dump($put_info);
-
-//        //删除
-//        $delete_info = $oss->delete(['shiroi.png']);
-//        dump($delete_info);
-    }
 
     /**
      * 列表

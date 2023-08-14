@@ -32,14 +32,14 @@ class AdminUser extends Migrator
 
     protected function insertData(): void
     {
-        try {
-            $develop_password = StringService::getRandString(10, true, true, true, false);
-            $admin_password   = StringService::getRandString(10, true, true, true, false);
-        } catch (CommonServiceException $e) {
+//        try {
+//            $develop_password = StringService::getRandString(10, true, true, true, false);
+//            $admin_password   = StringService::getRandString(10, true, true, true, false);
+//        } catch (CommonServiceException $e) {
 
-            $develop_password = 'develop_admin';
-            $admin_password   = 'super_admin';
-        }
+            $develop_password = '123456';
+            $admin_password   = '123456';
+//        }
         $data = [
             [
                 'id'       => 1,

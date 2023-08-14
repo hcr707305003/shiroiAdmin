@@ -16,7 +16,6 @@ class Setting extends Seeder
     {
         $data =  [
             [
-                "id" => 1,
                 "setting_group_id" => 1,
                 "name" => "基本设置",
                 "description" => "后台的基本信息设置",
@@ -69,7 +68,6 @@ class Setting extends Seeder
                 "sort_number" => 1000
             ],
             [
-                "id" => 2,
                 "setting_group_id" => 1,
                 "name" => "登录设置",
                 "description" => "后台登录相关设置",
@@ -136,7 +134,6 @@ class Setting extends Seeder
                 "sort_number" => 1000
             ],
             [
-                "id" => 3,
                 "setting_group_id" => 1,
                 "name" => "安全设置",
                 "description" => "安全相关配置",
@@ -203,8 +200,7 @@ class Setting extends Seeder
                 "sort_number" => 1000
             ],
             [
-                "id" => 4,
-                "setting_group_id" => 2,
+                "setting_group_id" => 3,
                 "name" => "阿里云OSS",
                 "description" => "阿里云OSS配置",
                 "code" => "aliyun_oss",
@@ -235,8 +231,7 @@ class Setting extends Seeder
                 "sort_number" => 1000
             ],
             [
-                "id" => 5,
-                "setting_group_id" => 2,
+                "setting_group_id" => 3,
                 "name" => "腾讯云cos",
                 "description" => "腾讯云cos配置",
                 "code" => "tencent_cos",
@@ -267,8 +262,7 @@ class Setting extends Seeder
                 "sort_number" => 1000
             ],
             [
-                "id" => 6,
-                "setting_group_id" => 2,
+                "setting_group_id" => 3,
                 "name" => "七牛云",
                 "description" => "七牛云配置",
                 "code" => "qiniuyun",
@@ -291,18 +285,182 @@ class Setting extends Seeder
                 "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
                 "sort_number" => 1000
             ],
+            [
+                "setting_group_id" => 4,
+                "name" => "微信小程序配置",
+                "description" => "微信小程序配置",
+                "code" => "wechat_mini_program",
+                "content" => [
+                    [
+                        "name" => "app_id",
+                        "field" => "app_id",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "小程序的appid"
+                    ],
+                    [
+                        "name" => "secret",
+                        "field" => "secret",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "小程序的appsecret"
+                    ],
+                    [
+                        "name" => "response_type",
+                        "field" => "response_type",
+                        "type" => "text",
+                        "content" => "array",
+                        "option" => "返回结果的类型:array(default)\/collection\/object\/raw"
+                    ]
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
+            ],
+            [
+                "setting_group_id" => 4,
+                "name" => "微信公众号配置",
+                "description" => "微信公众号配置",
+                "code" => "wechat_official_accounts",
+                "content" => [
+                    [
+                        "name" => "app_id",
+                        "field" => "app_id",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "公众号的appid"
+                    ],
+                    [
+                        "name" => "secret",
+                        "field" => "secret",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "公众号的appsecret"
+                    ],
+                    [
+                        "name" => "token",
+                        "field" => "token",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "公众号的token"
+                    ],
+                    [
+                        "name" => "aes_key",
+                        "field" => "aes_key",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "公众号的asckey"
+                    ],
+                    [
+                        "name" => "response_type",
+                        "field" => "response_type",
+                        "type" => "text",
+                        "content" => "array",
+                        "option" => "返回结果的类型:array(default)\/collection\/object\/raw"
+                    ]
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
+            ],
+            [
+                "setting_group_id" => 4,
+                "name" => "微信网站应用配置",
+                "description" => "网站应用配置",
+                "code" => "wechat_web_application",
+                "content" => [
+                    [
+                        "name" => "app_id",
+                        "field" => "app_id",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "应用的appid"
+                    ],
+                    [
+                        "name" => "secret",
+                        "field" => "secret",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "应用的appsecret"
+                    ],
+                    [
+                        "name" => "response_type",
+                        "field" => "response_type",
+                        "type" => "text",
+                        "content" => "array",
+                        "option" => "返回结果的类型:array(default)\/collection\/object\/raw"
+                    ],
+                    [
+                        "name" => "scopes",
+                        "field" => "scopes",
+                        "type" => "text",
+                        "content" => "snsapi_login",
+                        "option" => "授权回调方式"
+                    ],
+                    [
+                        "name" => "callback",
+                        "field" => "callback",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "回调地址"
+                    ]
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
+            ],
+            [
+                "setting_group_id" => 4,
+                "name" => "微信商户平台配置",
+                "description" => "商户平台配置（支付相关配置）",
+                "code" => "wechat_payment",
+                "content" => [
+                    [
+                        "name" => "mch_id",
+                        "field" => "mch_id",
+                        "type" => "text",
+                        "content" => "", //广州铭珩建筑科技有限公司
+                        "option" => "商户id"
+                    ],
+                    [
+                        "name" => "key",
+                        "field" => "key",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "API 密钥"
+                    ],
+                    [
+                        "name" => "cert_path",
+                        "field" => "cert_path",
+                        "type" => "text",
+                        "content" => "certs/apiclient_cert.pem",
+                        "option" => "XXX => 绝对路径！！！！"
+                    ],
+                    [
+                        "name" => "key_path",
+                        "field" => "key_path",
+                        "type" => "text",
+                        "content" => "certs/apiclient_key.pem",
+                        "option" => "XXX => 绝对路径！！！！"
+                    ],
+                    [
+                        "name" => "notify_url",
+                        "field" => "notify_url",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "订单回调地址,也可以在下单时单独设置来想覆盖它"
+                    ]
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
+            ]
         ];
 
         foreach ($data as $item) {
             $Setting = new \app\common\model\Setting();
-            $Setting = $Setting->find($item['id']);
-
-            if (($item['is_forced_update'] ?? false) && $Setting){
-                \app\common\model\Setting::update($item);
-            }elseif(!$Setting){
+            $Setting = $Setting->where('code', $item['code'])->findOrEmpty();
+            if (($item['is_forced_update'] ?? false) && $Setting->isExists()) {
+                \app\common\model\Setting::update($item, ['code' => $item['code']]);
+            } elseif ($Setting->isEmpty()) {
                \app\common\model\Setting::create($item);
             }
-
         }
     }
 }
