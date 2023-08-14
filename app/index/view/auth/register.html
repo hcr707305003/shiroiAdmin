@@ -54,6 +54,15 @@
                         </div>
                     </div>
                 </div>
+
+                {if $login_config.captcha==1}
+                {include file='auth/captcha' /}
+                {else/}
+                {if $login_config.captcha==2}
+                {include file='auth/gee_test' /}
+                {/if}
+                {/if}
+
                 <div class="row">
                     <div class="col-8">
                         <div class="icheck-primary">
@@ -64,6 +73,7 @@
                         </div>
                     </div>
                     <div class="col-4">
+                        {:token_field()}
                         <button type="submit" class="btn btn-primary btn-block">登录</button>
                     </div>
                 </div>
@@ -79,31 +89,38 @@
 </div>
 
 <script>
-
-    $('#dataForm').validate({
-        rules: {
-            'username': {
-                required: true,
+    $(document).ready(function () {
+        $('#dataForm').validate({
+            rules: {
+                'username': {
+                    required: true,
+                    minlength: 5
+                },
+                'password': {
+                    required: true,
+                    minlength: 6
+                },
+                'repassword': {
+                    required: true,
+                    minlength: 6
+                },
             },
-            'password': {
-                required: true,
-            },
-            'repassword': {
-                required: true,
-            },
-        },
-        messages: {
-
-            'username': {
-                required: "用户名不能为空",
-            },
-            'password': {
-                required: "密码不能为空",
-            },
-            'repassword': {
-                required: "再次密码不能为空",
-            },
-        }
+            messages: {
+                'username': {
+                    required: "用户名不能为空",
+                    minlength: "用户名长度不能小于5"
+                },
+                'password': {
+                    required: "密码不能为空",
+                    minlength: "用户名长度不能小于6"
+                },
+                'repassword': {
+                    required: "再次密码不能为空",
+                    minlength: "用户名长度不能小于6"
+                },
+            }
+        });
+        $('#username').focus();
     });
 </script>
 </body>

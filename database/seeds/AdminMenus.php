@@ -464,7 +464,7 @@ class AdminMenus extends Seeder
                 "Sons" => [
                     [
                         "name" => "所有配置",
-                        "url" => "admin/setting/all",
+                        "url" => "admin/setting/all_setting",
                         "icon" => "fas fa-list",
                         "is_show" => 1,
                         "is_top" => 0,
@@ -473,7 +473,7 @@ class AdminMenus extends Seeder
                     ],
                     [
                         "name" => "后台设置",
-                        "url" => "admin/setting/admin",
+                        "url" => "admin/setting/admin_setting",
                         "icon" => "fas fa-adjust",
                         "is_show" => 1,
                         "is_top" => 0,
@@ -482,7 +482,7 @@ class AdminMenus extends Seeder
                     ],
                     [
                         "name" => "前台设置",
-                        "url" => "admin/setting/api",
+                        "url" => "admin/setting/index_setting",
                         "icon" => "fas fa-user",
                         "is_show" => 1,
                         "is_top" => 0,
@@ -491,7 +491,7 @@ class AdminMenus extends Seeder
                     ],
                     [
                         "name" => "对象存储设置",
-                        "url" => "admin/setting/cloud",
+                        "url" => "admin/setting/cloud_setting",
                         "icon" => "fas fa-cloud",
                         "is_show" => 1,
                         "is_top" => 0,
@@ -500,7 +500,7 @@ class AdminMenus extends Seeder
                     ],
                     [
                         "name" => "微信设置",
-                        "url" => "admin/setting/wechat",
+                        "url" => "admin/setting/wechat_setting",
                         "icon" => "fas fa-comment",
                         "is_show" => 1,
                         "is_top" => 0,

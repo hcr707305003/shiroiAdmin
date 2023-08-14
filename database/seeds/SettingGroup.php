@@ -29,10 +29,10 @@ class SettingGroup extends Seeder
             ],
             [
                 "id" => 2,
-                "module" => "api",
+                "module" => "index",
                 "name" => "前台设置",
                 "description" => "前台方面的设置",
-                "code" => "api",
+                "code" => "index",
                 "sort_number" => 1000,
                 "icon" => "fa-list",
                 "auto_create_menu" => 0,

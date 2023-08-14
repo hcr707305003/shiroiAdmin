@@ -200,6 +200,72 @@ class Setting extends Seeder
                 "sort_number" => 1000
             ],
             [
+                "setting_group_id" => 2,
+                "name" => "登录设置",
+                "description" => "前台登录相关设置",
+                "code" => "login",
+                "content" => [
+                    [
+                        "name" => "登录token验证",
+                        "field" => "token",
+                        "type" => "switch",
+                        "content" => "1",
+                        "option" => "是否开启token验证"
+                    ],
+                    [
+                        "name" => "验证码",
+                        "field" => "captcha",
+                        "type" => "select",
+                        "content" => "1",
+                        "option" => "0||不开启\r\n1||图形验证码\r\n2||滑动验证"
+                    ],
+                    [
+                        "name" => "登录背景",
+                        "field" => "background",
+                        "type" => "image",
+                        "content" => "/static/admin/images/login-default-bg.jpg",
+                        "option" => ""
+                    ],
+                    [
+                        "name" => "极验ID",
+                        "field" => "geetest_id",
+                        "type" => "text",
+                        "content" => "66cfc0f309e368364b753dad7d2f67f2",
+                        "option" => ""
+                    ],
+                    [
+                        "name" => "极验KEY",
+                        "field" => "geetest_key",
+                        "type" => "text",
+                        "content" => "99750f86ec232c997efaff56c7b30cd3",
+                        "option" => ""
+                    ],
+                    [
+                        "name" => "登录重试限制",
+                        "field" => "login_limit",
+                        "type" => "switch",
+                        "content" => "0",
+                        "option" => "0||否\r\n1||是"
+                    ],
+                    [
+                        "name" => "限制最大次数",
+                        "field" => "login_max_count",
+                        "type" => "number",
+                        "content" => "5",
+                        "option" => ""
+                    ],
+                    [
+                        "name" => "禁止登录时长(小时)",
+                        "field" => "login_limit_hour",
+                        "type" => "number",
+                        "content" => "2",
+                        "option" => ""
+                    ]
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
+            ],
+            [
                 "setting_group_id" => 3,
                 "name" => "阿里云OSS",
                 "description" => "阿里云OSS配置",
@@ -455,9 +521,13 @@ class Setting extends Seeder
 
         foreach ($data as $item) {
             $Setting = new \app\common\model\Setting();
-            $Setting = $Setting->where('code', $item['code'])->findOrEmpty();
+            $where = [
+                'code' => $item['code'],
+                'setting_group_id' => $item['setting_group_id']
+            ];
+            $Setting = $Setting->where($where)->findOrEmpty();
             if (($item['is_forced_update'] ?? false) && $Setting->isExists()) {
-                \app\common\model\Setting::update($item, ['code' => $item['code']]);
+                \app\common\model\Setting::update($item, $where);
             } elseif ($Setting->isEmpty()) {
                \app\common\model\Setting::create($item);
             }

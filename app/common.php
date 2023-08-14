@@ -63,7 +63,10 @@ if (!function_exists('get_database_setting')) {
             $group = (new app\common\model\SettingGroup)->where('code', $name[0])->findOrEmpty();
             if ($group->isExists()) {
                 if(isset($name[1])) {
-                    $setting = (new app\common\model\Setting)->where('code',$name[1])->findOrEmpty();
+                    $setting = (new app\common\model\Setting)->where([
+                        'code' => $name[1],
+                        'setting_group_id' => $group['id']
+                    ])->findOrEmpty();
                     if($setting->isExists()) {
                         foreach ($setting->content as $content) {
                             $result[$content['field']] = $content['content'];

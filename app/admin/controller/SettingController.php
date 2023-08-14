@@ -228,7 +228,7 @@ class SettingController extends AdminBaseController
      * @return string
      * @throws Exception
      */
-    public function all(Request $request, SettingGroup $model): string
+    public function all_setting(Request $request, SettingGroup $model): string
     {
         $data  = $model->scope('where', $request->param())
             ->paginate([
@@ -244,7 +244,7 @@ class SettingController extends AdminBaseController
             'page'  => $data->render(),
             'total' => $data->total(),
         ]);
-        return $this->fetch();
+        return $this->fetch('all');
     }
 
     /**
@@ -262,7 +262,7 @@ class SettingController extends AdminBaseController
      * @return string
      * @throws Exception
      */
-    public function admin(): string
+    public function admin_setting(): string
     {
         return $this->show(1);
     }
@@ -272,7 +272,7 @@ class SettingController extends AdminBaseController
      * @return string
      * @throws Exception
      */
-    public function api(): string
+    public function index_setting(): string
     {
         return $this->show(2);
     }
@@ -282,7 +282,7 @@ class SettingController extends AdminBaseController
      * @return string
      * @throws Exception
      */
-    public function cloud(): string
+    public function cloud_setting(): string
     {
         return $this->show(3);
     }
@@ -292,7 +292,7 @@ class SettingController extends AdminBaseController
      * @return string
      * @throws Exception
      */
-    public function wechat(): string
+    public function wechat_setting(): string
     {
         return $this->show(4);
     }
