@@ -38,7 +38,8 @@
         "php-curl-class/php-curl-class": "^9.17",
         "mathieuviossat/arraytotexttable": "^1.0",
         "china-lishuo/oss-utils": "^1.2",
-        "overtrue/wechat": "~5.0"
+        "overtrue/wechat": "~5.0",
+        "onliner/geetest-php-sdk": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

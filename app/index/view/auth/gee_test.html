@@ -15,7 +15,7 @@
         $("#loginButton").click(function (e) {
             let validate = captchaObj.getValidate();
             if (!validate) {
-                layer.msg('请先完成验证',{icon:2});
+                showIndexError('请先完成验证');
                 e.preventDefault();
             }
         });

@@ -12,12 +12,15 @@ namespace app\index\service;
 
 use app\common\model\User;
 use app\index\exception\IndexServiceException;
+use think\facade\Cache;
 use think\Model;
 
 class AuthService extends IndexBaseService
 {
+    protected string $limitKeyPrefix = 'index_login_count_';
 
-    protected $model;
+    protected User $model;
+
     public function __construct()
     {
         $this->model = new User();
@@ -70,5 +73,48 @@ class AuthService extends IndexBaseService
             'nickname' => $username,
             'password' => $password,
         ]);
+    }
+
+    /**
+     * 检测登录限制
+     * @throws IndexServiceException
+     */
+    public function checkLoginLimit(): bool
+    {
+        $loginConfig = setting('index.login');
+        if ($loginConfig['login_limit'] ?? 0) {
+            // 最大错误次数
+            $max_count        = $loginConfig['login_max_count'] ?? 5;
+            $login_limit_hour = $loginConfig['login_limit_hour'] ?? 2;
+            // 缓存key
+            $cache_key  = $this->limitKeyPrefix . md5(request()->ip());
+            $have_count = cache($cache_key);
+            if ($have_count >= $max_count) {
+                throw new IndexServiceException('连续' . $max_count . '次登录失败，请' . $login_limit_hour . '小时后再试');
+            }
+            return true;
+        }
+        return true;
+    }
+
+    /**
+     * 设置登录限制
+     * @return bool
+     */
+    public function setLoginLimit(): bool
+    {
+        $loginConfig = setting('index.login');
+        if ($loginConfig['login_limit'] ?? 0) {
+            // 最大错误次数
+            $login_limit_hour = $loginConfig['login_limit_hour'] ?? 2;
+            // 缓存key
+            $cache_key = $this->limitKeyPrefix . md5(request()->ip());
+            if (Cache::has($cache_key)) {
+                Cache::inc($cache_key);
+                return true;
+            }
+            Cache::set($cache_key, 1, $login_limit_hour * 3600);
+        }
+        return true;
     }
 }

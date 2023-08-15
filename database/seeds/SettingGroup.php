@@ -62,16 +62,28 @@ class SettingGroup extends Seeder
                 "auto_create_menu" => 0,
                 "auto_create_file" => 0,
                 "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
-            ]
+            ],
+            [
+                "id" => 5,
+                "module" => "config",
+                "name" => "基本设置",
+                "description" => "前后台方面的基本设置",
+                "code" => "config",
+                "sort_number" => 1000,
+                "icon" => "fa-wrench",
+                "auto_create_menu" => 0,
+                "auto_create_file" => 0,
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+            ],
         ];
 
         foreach ($data as $item) {
             $moder = new \app\common\model\SettingGroup();
-            $Setting = $moder->find($item['id']);
+            $Setting = $moder->findOrEmpty($item['id']);
 
-            if (($item['is_forced_update'] ?? false) && $Setting){
+            if (($item['is_forced_update'] ?? false) && $Setting->isExists()) {
                 $moder::update($item);
-            }elseif(!$Setting){
+            } elseif($Setting->isEmpty()) {
                 $moder::create($item);
             }
 

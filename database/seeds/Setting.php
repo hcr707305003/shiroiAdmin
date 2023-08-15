@@ -95,20 +95,6 @@ class Setting extends Seeder
                         "option" => ""
                     ],
                     [
-                        "name" => "极验ID",
-                        "field" => "geetest_id",
-                        "type" => "text",
-                        "content" => "66cfc0f309e368364b753dad7d2f67f2",
-                        "option" => ""
-                    ],
-                    [
-                        "name" => "极验KEY",
-                        "field" => "geetest_key",
-                        "type" => "text",
-                        "content" => "99750f86ec232c997efaff56c7b30cd3",
-                        "option" => ""
-                    ],
-                    [
                         "name" => "登录重试限制",
                         "field" => "login_limit",
                         "type" => "switch",
@@ -223,21 +209,7 @@ class Setting extends Seeder
                         "name" => "登录背景",
                         "field" => "background",
                         "type" => "image",
-                        "content" => "/static/admin/images/login-default-bg.jpg",
-                        "option" => ""
-                    ],
-                    [
-                        "name" => "极验ID",
-                        "field" => "geetest_id",
-                        "type" => "text",
-                        "content" => "66cfc0f309e368364b753dad7d2f67f2",
-                        "option" => ""
-                    ],
-                    [
-                        "name" => "极验KEY",
-                        "field" => "geetest_key",
-                        "type" => "text",
-                        "content" => "99750f86ec232c997efaff56c7b30cd3",
+                        "content" => "/static/index/images/login-default-bg.jpg",
                         "option" => ""
                     ],
                     [
@@ -513,6 +485,30 @@ class Setting extends Seeder
                         "content" => "",
                         "option" => "订单回调地址,也可以在下单时单独设置来想覆盖它"
                     ]
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
+            ],
+            [
+                "setting_group_id" => 5,
+                "name" => "极验配置",
+                "description" => "极验配置",
+                "code" => "geetest",
+                "content" => [
+                    [
+                        "name" => "极验ID",
+                        "field" => "geetest_id",
+                        "type" => "text",
+                        "content" => "66cfc0f309e368364b753dad7d2f67f2",
+                        "option" => ""
+                    ],
+                    [
+                        "name" => "极验KEY",
+                        "field" => "geetest_key",
+                        "type" => "text",
+                        "content" => "99750f86ec232c997efaff56c7b30cd3",
+                        "option" => ""
+                    ],
                 ],
                 "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
                 "sort_number" => 1000

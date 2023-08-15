@@ -23,6 +23,8 @@
 
     <script src="__INDEX_JS__/adminlte.min.js"></script>
     <script src="__INDEX_JS__/index.js"></script>
+    <!-- 登录背景相关 -->
+    {include file='auth/login_bg' /}
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -74,7 +76,7 @@
                     </div>
                     <div class="col-4">
                         {:token_field()}
-                        <button type="submit" class="btn btn-primary btn-block">登录</button>
+                        <button type="submit" class="btn btn-primary btn-block" id="loginButton">登录</button>
                     </div>
                 </div>
             </form>

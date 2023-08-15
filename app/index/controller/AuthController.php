@@ -10,7 +10,6 @@ use app\common\validate\UserValidate;
 use app\index\service\AuthService;
 use think\captcha\facade\Captcha;
 use think\Response;
-use think\response\Json;
 use think\response\Redirect;
 use think\Request;
 use Exception;
@@ -26,6 +25,56 @@ class AuthController extends IndexBaseController
     ];
 
     /**
+     * 验证注册和登录
+     */
+    protected function verify(string $scene, $config, Request $request, AuthService $service, UserValidate $validate)
+    {
+        $param = $request->param();
+        //是否开启了登录token验证
+        if(($config['login_config']['token'] ?? 0) == 1) {
+            //验证登录token
+            if(($param['__token__'] ?? '') !== session('__token__')) {
+                return index_error('token错误');
+            }
+        }
+        try {
+            // 验证码形式，0为不验证，1为图形验证码，2为极验
+            $captcha = (int)$config['login_config']['captcha'];
+
+            //图形验证码
+            if (($captcha === 1) && !captcha_check($param['captcha'] ?? '')) {
+                return index_error('验证码错误');
+            }
+
+            //极验
+            if(($captcha === 2)) {
+                $geetest_config  = $config['geetest_config'];
+                $geetest = new \Onliner\GeeTest\GeeTest($geetest_config['geetest_id'], $geetest_config['geetest_key']);
+                if(!$geetest->validate(
+                    $param['geetest_challenge'] ?? '',
+                    $param['geetest_validate'] ?? '',
+                    $param['geetest_seccode'] ?? '', true)
+                ) {
+                    return index_error('验证码失效');
+                }
+            }
+
+            $validate->scene("index_{$scene}")->failException(true)->check($param);
+
+            // 检查单设备登录
+            $service->checkLoginLimit();
+
+            $user = $service->{$scene}($param['username'], $param['password']);
+            self::authLogin($user,(bool)($param['remember']??false));
+            return index_success('登录成功','index/index',$user);
+        } catch (IndexServiceException $e) {
+            // 记录错误次数
+            $service->setLoginLimit();
+            return index_error($e->getMessage());
+        }
+    }
+
+    /**
      * 登录
      * @param Request $request
      * @param AuthService $service
@@ -36,34 +85,15 @@ class AuthController extends IndexBaseController
     public function login(Request $request, AuthService $service, UserValidate $validate)
     {
         $login_config = setting('index.login');
+        $geetest_config = setting('config.geetest');
         //登录逻辑
         if($request->isPost()){
-            $param = $request->param();
-
-            try {
-                // 验证码形式，0为不验证，1为图形验证码，2为极验
-                $captcha = (int)$login_config['captcha'];
-
-                if (($captcha === 1) && !captcha_check($param['captcha'])) {
-                    return index_error('验证码错误');
-                }
-
-                $check = $validate->scene('index_login')->check($param);
-                if (!$check) {
-                    return index_error($validate->getError());
-                }
-
-                $user = $service->login($param['username'], $param['password']);
-                self::authLogin($user,(bool)($param['remember']??false));
-                return index_success('登录成功','index/index',$user);
-            } catch (IndexServiceException $e) {
-                return  index_error($e->getMessage());
-            }
+            return $this->verify('login',compact('login_config','geetest_config'),$request,$service,$validate);
         }
 
         $this->assign([
-            'login_config' => $login_config,
-            'geetest_id'   => $login_config['geetest_id'] ?? '',
+            'login_config' => array_merge($login_config,$geetest_config),
+            'geetest_id'   => $geetest_config['geetest_id'] ?? '',
         ]);
 
         return $this->fetch();
@@ -80,34 +110,15 @@ class AuthController extends IndexBaseController
     public function register(Request $request, AuthService $service, UserValidate $validate)
     {
         $login_config = setting('index.login');
-        //登录逻辑
-        if($request->isPost()){
-            $param = $request->param();
+        $geetest_config = setting('config.geetest');
 
-            try {
-                // 验证码形式，0为不验证，1为图形验证码，2为极验
-                $captcha = (int)$login_config['captcha'];
-
-                if (($captcha === 1) && !captcha_check($param['captcha'])) {
-                    return index_error('验证码错误');
-                }
-
-                $check = $validate->scene('index_register')->check($param);
-                if (!$check) {
-                    return index_error($validate->getError());
-                }
-
-                $user = $service->register($param['username'], $param['password']);
-                self::authLogin($user,(bool)($param['remember']??false));
-                return index_success('登录成功','index/index',$user);
-            } catch (IndexServiceException $e) {
-                return index_error($e->getMessage());
-            }
+        if ($request->isPost()) {
+            return $this->verify('register',compact('login_config','geetest_config'),$request,$service,$validate);
         }
 
         $this->assign([
-            'login_config' => $login_config,
-            'geetest_id'   => $login_config['geetest_id'] ?? '',
+            'login_config' => array_merge($login_config,$geetest_config),
+            'geetest_id'   => $geetest_config['geetest_id'] ?? '',
         ]);
 
         return $this->fetch();
@@ -129,8 +140,8 @@ class AuthController extends IndexBaseController
      */
     public function geetest(Request $request)
     {
-        $config  = setting('index.login');
-        $geeTest = new GeeTest($config['geetest_id'], $config['geetest_key']);
+        $geetest_config  = setting('config.geetest');
+        $geeTest = new GeeTest($geetest_config['geetest_id'], $geetest_config['geetest_key']);
 
         $ip = $request->ip();
         $ug = $request->header('user-agent');

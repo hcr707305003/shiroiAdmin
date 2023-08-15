@@ -83,13 +83,10 @@ class AuthController extends AdminBaseController
             return admin_success('登录成功', [], $redirect);
         }
 
-        $geetest_config = setting('admin.login');
-        $geetest_id     = $geetest_config['geetest_id'] ?? '';
-
         $this->assign([
             'redirect'     => $redirect,
             'login_config' => $login_config,
-            'geetest_id'   => $geetest_id,
+            'geetest_id'   => setting('config.geetest.geetest_id', ''),
         ]);
 
         return $this->fetch();
@@ -127,8 +124,8 @@ class AuthController extends AdminBaseController
      */
     public function geetest(Request $request): Json
     {
-        $config  = setting('admin.login');
-        $geeTest = new GeeTest($config['geetest_id'], $config['geetest_key']);
+        $geetest_config  = setting('config.geetest');
+        $geeTest = new GeeTest($geetest_config['geetest_id'], $geetest_config['geetest_key']);
 
         $ip = $request->ip();
         $ug = $request->header('user-agent');
