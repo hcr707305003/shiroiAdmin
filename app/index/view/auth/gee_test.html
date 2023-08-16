@@ -12,6 +12,7 @@
 
 <script>
     var handlerEmbed = function (captchaObj) {
+        geetest = captchaObj;
         $("#loginButton").click(function (e) {
             let validate = captchaObj.getValidate();
             if (!validate) {

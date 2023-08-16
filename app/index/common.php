@@ -2,6 +2,7 @@
 const URL_CURRENT = 'url://current';
 const URL_RELOAD  = 'url://reload';
 const URL_BACK    = 'url://back';
+const RELOAD_GEETEST = 'url://reload_geetest';
 
 use think\Response;
 

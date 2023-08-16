@@ -512,6 +512,58 @@ class Setting extends Seeder
                 ],
                 "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
                 "sort_number" => 1000
+            ],
+            [
+                "setting_group_id" => 5,
+                "name" => "邮箱配置",
+                "description" => "邮箱配置",
+                "code" => "email",
+                "content" => [
+                    [
+                        "name" => "邮件驱动",
+                        "field" => "driver",
+                        "type" => "text",
+                        "content" => "smtp",
+                        "option" => "邮件驱动, 支持 smtp|sendmail|mail 三种驱动"
+                    ],
+                    [
+                        "name" => "SMTP服务器地址",
+                        "field" => "host",
+                        "type" => "text",
+                        "content" => "smtp.qq.com",
+                        "option" => "SMTP服务器地址"
+                    ],
+                    [
+                        "name" => "SMTP服务器端口号",
+                        "field" => "port",
+                        "type" => "text",
+                        "content" => "465",
+                        "option" => "SMTP服务器端口号,一般为25"
+                    ],
+                    [
+                        "name" => "发件邮箱地址",
+                        "field" => "addr",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "发件邮箱地址"
+                    ],
+                    [
+                        "name" => "发件邮箱密码",
+                        "field" => "pass",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "发件邮箱密码"
+                    ],
+                    [
+                        "name" => "发件邮箱名称",
+                        "field" => "name",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "发件邮箱名称"
+                    ],
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
             ]
         ];
 

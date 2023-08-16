@@ -5,6 +5,7 @@ var Toast = Swal.mixin({
     timer: 2345
 });
 
+geetest = null;
 
 /** 表单验证 */
 $.validator.setDefaults({
@@ -133,6 +134,10 @@ function indexGoUrl(url) {
     } else if (url === 'url://back' ) {
         console.log('Return to the last page.');
         history.back(1);
+    } else if (url === 'url://reload_geetest') {
+        if(geetest) {
+            geetest.reset();
+        }
     } else {
         console.log('Go to ' + url);
         window.location.href = url;

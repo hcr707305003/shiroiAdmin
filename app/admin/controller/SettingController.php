@@ -297,5 +297,15 @@ class SettingController extends AdminBaseController
         return $this->show(4);
     }
 
+    /**
+     * 基本设置
+     * @return string
+     * @throws Exception
+     */
+    public function config_setting(): string
+    {
+        return $this->show(5);
+    }
+
 }//append_menu
 //请勿删除上面的注释，上面注释为自动追加菜单方法标记

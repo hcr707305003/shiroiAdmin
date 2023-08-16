@@ -34,7 +34,7 @@ class AuthController extends IndexBaseController
         if(($config['login_config']['token'] ?? 0) == 1) {
             //验证登录token
             if(($param['__token__'] ?? '') !== session('__token__')) {
-                return index_error('token错误');
+                return index_error('请刷新重试', URL_RELOAD);
             }
         }
         try {
@@ -44,19 +44,6 @@ class AuthController extends IndexBaseController
             //图形验证码
             if (($captcha === 1) && !captcha_check($param['captcha'] ?? '')) {
                 return index_error('验证码错误');
-            }
-
-            //极验
-            if(($captcha === 2)) {
-                $geetest_config  = $config['geetest_config'];
-                $geetest = new \Onliner\GeeTest\GeeTest($geetest_config['geetest_id'], $geetest_config['geetest_key']);
-                if(!$geetest->validate(
-                    $param['geetest_challenge'] ?? '',
-                    $param['geetest_validate'] ?? '',
-                    $param['geetest_seccode'] ?? '', true)
-                ) {
-                    return index_error('验证码失效');
-                }
             }
 
             $validate->scene("index_{$scene}")->failException(true)->check($param);

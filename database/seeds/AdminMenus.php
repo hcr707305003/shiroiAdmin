@@ -508,6 +508,15 @@ class AdminMenus extends Seeder
                         "log_method" => "不记录",
                     ],
                     [
+                        "name" => "基本设置",
+                        "url" => "admin/setting/config_setting",
+                        "icon" => "fas fa-wrench",
+                        "is_show" => 1,
+                        "is_top" => 0,
+                        "sort_number" => 45,
+                        "log_method" => "不记录",
+                    ],
+                    [
                         "name" => "更新设置",
                         "url" => "admin/setting/update",
                         "icon" => "fas fa-pencil",

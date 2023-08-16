@@ -6,12 +6,9 @@
 
 namespace app\common\controller;
 
-use EasyWeChat\Kernel\Exceptions\BadRequestException;
-use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
-use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
+use EasyWeChat\Kernel\Exceptions\{BadRequestException, InvalidArgumentException, InvalidConfigException};
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Response;
-use think\facade\Cache;
 use think\response\Json;
 use app\common\plugin\{WechatPayment, WechatMiniProgram, WechatOfficialAccounts, WechatWebApplication};
 use app\common\traits\WechatTrait;
@@ -26,6 +23,20 @@ class TestController extends CommonBaseController
     {
         //初始化微信工厂
         $this->initWechat();
+    }
+
+    public function testMail()
+    {
+        dd((new \app\common\plugin\Mailer())
+            //要发送给的邮箱以及标题
+            ->generate('707305003@qq.com', '哈哈哈哈')
+            //要发送的内容
+            ->setContent('<img src="{image}"/>图片测试', [
+                'embed:image' => public_path('uploads/image') . 'user.png'
+            ])
+            //要发送的单行文本
+            ->setLine('这是一行文本')
+            ->send());
     }
 
     public function testCloud()
