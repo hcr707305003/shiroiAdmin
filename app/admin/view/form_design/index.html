@@ -2,6 +2,7 @@
 {extend name='public/base' /}
 {block name='content'}
 {include file='public/content_header' /}
+{css href="__ADMIN_PLUGINS__/form-design/formbuilder-min.css" /}
 <style>
     * {
         box-sizing: border-box;
@@ -29,6 +30,9 @@
         <div class="fb-main"></div>
     </div>
 </section>
+<!--表单设计-->
+{js href="__ADMIN_PLUGINS__/form-design/vendor.js" /}
+{js href="__ADMIN_PLUGINS__/form-design/formbuilder-min.js" /}
 <script>
     $(function () {
         const fb = new Formbuilder({
