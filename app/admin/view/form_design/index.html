@@ -1,0 +1,80 @@
+<!-- 空白页面参考模版 -->
+{extend name='public/base' /}
+{block name='content'}
+{include file='public/content_header' /}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        background-color: #444;
+        font-family: sans-serif;
+    }
+    .fb-main {
+        background-color: #fff;
+        border-radius: 5px;
+        min-height: 600px;
+    }
+    input[type=text] {
+        height: 26px;
+        margin-bottom: 3px;
+    }
+    select {
+        margin-bottom: 5px;
+        font-size: 40px;
+    }
+</style>
+<section class="content">
+    <div class="container-fluid">
+        <div class="fb-main"></div>
+    </div>
+</section>
+<script>
+    $(function () {
+        const fb = new Formbuilder({
+            selector: '.fb-main',
+            bootstrapData: [
+                {
+                    "label": "姓名",
+                    "field_type": "text",
+                    "required": true,
+                    "field_options": {},
+                    "cid": "c6"
+                },
+                {
+                    "label": "学历",
+                    "field_type": "radio",
+                    "required": true,
+                    "field_options": {
+                        "options": [{
+                            "label": "专科",
+                            "checked": true
+                        }, {
+                            "label": "本科",
+                            "checked": false
+                        }, {
+                            "label": "硕士",
+                            "checked": false
+                        }, {
+                            "label": "博士",
+                            "checked": false
+                        }],
+                        "include_other_option": true
+                    },
+                    "cid": "c10"
+                },
+                {
+                    "label": "Medical history",
+                    "field_type": "file",
+                    "required": true,
+                    "field_options": {},
+                    "cid": "c14"
+                }
+            ]
+        });
+        fb.on('save', function (payload) {
+            console.log(payload);
+        })
+    });
+</script>
+{/block}

@@ -677,6 +677,16 @@ class AdminMenus extends Seeder
                                 "log_method" => "POST",
                             ]
                         ]
+                    ],
+                    [
+                        "name" => "测试案例（三）",
+                        "url" => "admin/form_design/index",
+                        "icon" => "fas fa-list",
+                        "is_show" => 1,
+                        "is_top" => 0,
+                        "sort_number" => 1000,
+                        "log_method" => "不记录",
+                        "Sons" => []
                     ]
                 ]
             ]
