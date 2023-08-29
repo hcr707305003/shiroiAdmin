@@ -6,7 +6,6 @@
 
 namespace app\common\plugin;
 
-use app\common\model\Setting;
 use EasyWeChat\Factory;
 
 class WechatPayment
@@ -15,7 +14,7 @@ class WechatPayment
     protected array $setting  = [];
 
     //系统code
-    protected string $code = "wechat_payment";
+    protected string $code = "wechat.wechat_payment";
 
     //app_id
     protected string $app_id;
@@ -52,19 +51,19 @@ class WechatPayment
      * 初始化配置信息
      */
     public function __construct() {
-        $this->setting = (new Setting)->where(['code' => $this->code])->findOrEmpty()->toArray();
-        if($this->setting) foreach ($this->setting['content'] as $param) {
-            if(property_exists(self::class,$param['field'])) {
+        if (is_array($this->setting = setting($this->code))) foreach ($this->setting as $k => $v) {
+            if (property_exists(self::class,$k)) {
                 //证书需要补齐路径
-                if($param['field'] == 'cert_path' || $param['field'] == 'key_path') {
-                    $param['content'] = public_path() . $param['content'];
+                if($k == 'cert_path' || $k == 'key_path') {
+                    $v = public_path() . $v;
                 }
                 //回调地址需要补齐
-                if($param['field'] == 'notify_url') {
-                    $param['content'] = request()->domain() . $param['content'];
+                if($k == 'notify_url') {
+                    $v = request()->domain() . $v;
                 }
-                if(in_array($param['field'],$this->config_field)) {
-                    $this->config[$param['field']] = $this->{$param['field']} = $param['content'];
+
+                if(in_array($k,$this->config_field)) {
+                    $this->config[$k] = $this->{$k} = $v;
                 }
             }
         }
@@ -110,7 +109,7 @@ class WechatPayment
      */
     public function setMchId(string $mch_id): self
     {
-        $this->mch_id = $mch_id;
+        $this->mch_id = $this->config['mch_id'] = $mch_id;
         return $this;
     }
 
@@ -128,7 +127,7 @@ class WechatPayment
      */
     public function setKey(string $key): self
     {
-        $this->key = $key;
+        $this->key = $this->config['key'] = $key;
         return $this;
     }
 
@@ -146,7 +145,7 @@ class WechatPayment
      */
     public function setCertPath(string $cert_path): self
     {
-        $this->cert_path = $cert_path;
+        $this->cert_path = $this->config['cert_path'] = $cert_path;
         return $this;
     }
 
@@ -164,7 +163,7 @@ class WechatPayment
      */
     public function setKeyPath(string $key_path): self
     {
-        $this->key_path = $key_path;
+        $this->key_path = $this->config['key_path'] = $key_path;
         return $this;
     }
 
@@ -182,7 +181,7 @@ class WechatPayment
      */
     public function setNotifyUrl(string $notify_url): self
     {
-        $this->notify_url = $notify_url;
+        $this->notify_url = $this->config['notify_url'] = $notify_url;
         return $this;
     }
 

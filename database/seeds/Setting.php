@@ -262,7 +262,7 @@ class Setting extends Seeder
                         "field" => "region",
                         "type" => "text",
                         "content" => "",
-                        "option" => "region地区，例：http://oss-cn-shenzhen.aliyuncs.com"
+                        "option" => "region地区，例：oss-cn-shenzhen.aliyuncs.com"
                     ]
                 ],
                 "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
@@ -386,7 +386,7 @@ class Setting extends Seeder
                         "field" => "aes_key",
                         "type" => "text",
                         "content" => "",
-                        "option" => "公众号的asckey"
+                        "option" => "EncodingAESKey，兼容与安全模式下请一定要填写！！！"
                     ],
                     [
                         "name" => "response_type",

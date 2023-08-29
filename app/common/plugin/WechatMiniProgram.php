@@ -6,7 +6,6 @@
 
 namespace app\common\plugin;
 
-use app\common\model\Setting;
 use EasyWeChat\Factory;
 
 class WechatMiniProgram
@@ -15,7 +14,7 @@ class WechatMiniProgram
     protected array $setting  = [];
 
     //系统code
-    protected string $code = "wechat_mini_program";
+    protected string $code = "wechat.wechat_mini_program";
 
     //app_id
     protected string $app_id;
@@ -40,11 +39,10 @@ class WechatMiniProgram
      * 初始化配置信息
      */
     public function __construct() {
-        $this->setting = (new Setting)->where(['code' => $this->code])->findOrEmpty()->toArray();
-        if($this->setting) foreach ($this->setting['content'] as $param) {
-            if(property_exists(self::class,$param['field'])) {
-                if(in_array($param['field'],$this->config_field)) {
-                    $this->config[$param['field']] = $this->{$param['field']} = $param['content'];
+        if (is_array($this->setting = setting($this->code))) foreach ($this->setting as $k => $v) {
+            if (property_exists(self::class,$k)) {
+                if(in_array($k,$this->config_field)) {
+                    $this->config[$k] = $this->{$k} = $v;
                 }
             }
         }
@@ -96,7 +94,7 @@ class WechatMiniProgram
      */
     public function setAppId(string $app_id): self
     {
-        $this->app_id = $app_id;
+        $this->app_id = $this->config['app_id'] = $app_id;
         return $this;
     }
 
@@ -114,7 +112,7 @@ class WechatMiniProgram
      */
     public function setSecret(string $secret): self
     {
-        $this->secret = $secret;
+        $this->secret = $this->config['secret'] = $secret;
         return $this;
     }
 
@@ -132,7 +130,7 @@ class WechatMiniProgram
      */
     public function setResponseType(string $response_type): self
     {
-        $this->response_type = $response_type;
+        $this->response_type = $this->config['response_type'] = $response_type;
         return $this;
     }
 

@@ -6,7 +6,6 @@
 
 namespace app\common\plugin;
 
-use app\common\model\Setting;
 use EasyWeChat\Factory;
 
 class WechatWebApplication
@@ -15,7 +14,7 @@ class WechatWebApplication
     protected array $setting  = [];
 
     //系统code
-    protected string $code = "wechat_web_application";
+    protected string $code = "wechat.wechat_web_application";
 
     //app_id
     protected string $app_id;
@@ -49,21 +48,21 @@ class WechatWebApplication
 
     public function __construct($code = '')
     {
-        $this->setting = (new Setting)->where(['code' => $code ?: $this->code])->findOrEmpty()->toArray();
-        if($this->setting) foreach ($this->setting['content'] as $param) {
-            if(property_exists(self::class,$param['field'])) {
+        if (is_array($this->setting = setting($this->code))) foreach ($this->setting as $k => $v) {
+            if (property_exists(self::class,$k)) {
                 //回调地址需要补齐
-                if($param['field'] == 'callback') {
-                    $param['content'] = request()->domain() . $param['content'];
+                if($k == 'callback') {
+                    $v = request()->domain() . $v;
                 }
-                if(in_array($param['field'],$this->config_field)) {
-                    if(($param['field'] == 'scopes') || ($param['field'] == 'callback')) {
-                        $this->config['oauth'][$param['field']] = $this->{$param['field']} = $param['content'];
+
+                if(in_array($k,$this->config_field)) {
+                    if(($k == 'scopes') || ($k == 'callback')) {
+                        $this->config['oauth'][$k] = $this->{$k} = $v;
                     } else {
-                        $this->config[$param['field']] = $this->{$param['field']} = $param['content'];
+                        $this->config[$k] = $this->{$k} = $v;
                     }
                 }
-                $this->all_config[$param['field']] = $param['content'];
+                $this->all_config[$k] = $v;
             }
         }
     }

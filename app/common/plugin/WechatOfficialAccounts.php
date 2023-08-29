@@ -6,7 +6,6 @@
 
 namespace app\common\plugin;
 
-use app\common\model\Setting;
 use EasyWeChat\Factory;
 
 class WechatOfficialAccounts
@@ -15,7 +14,7 @@ class WechatOfficialAccounts
     protected array $setting  = [];
 
     //系统code
-    protected string $code = "wechat_official_accounts";
+    protected string $code = "wechat.wechat_official_accounts";
 
     //app_id
     protected string $app_id;
@@ -25,6 +24,12 @@ class WechatOfficialAccounts
 
     //response_type
     protected string $response_type = 'array';
+
+    //token
+    protected string $token;
+
+    //aes_key
+    protected string $aes_key;
 
     //默认配置组
     protected array $config = [];
@@ -42,18 +47,13 @@ class WechatOfficialAccounts
      * 初始化配置信息
      */
     public function __construct() {
-        $this->setting = (new Setting)->where(['code' => $this->code])->findOrEmpty()->toArray();
-        if($this->setting) foreach ($this->setting['content'] as $param) {
-            if(property_exists(self::class,$param['field'])) {
-                if(in_array($param['field'],$this->config_field)) {
-                    $this->config[$param['field']] = $this->{$param['field']} = $param['content'];
+        if (is_array($this->setting = setting($this->code))) foreach ($this->setting as $k => $v) {
+            if (property_exists(self::class,$k)) {
+                if(in_array($k,$this->config_field)) {
+                    $this->config[$k] = $this->{$k} = $v;
                 }
             }
-
         }
-        $class_data = explode('\\',self::class);
-        //添加log
-        $this->config = array_merge($this->config, (array)config('wechat.'.parse_name(end($class_data))));
     }
 
     /**
@@ -118,7 +118,7 @@ class WechatOfficialAccounts
      */
     public function setAppId(string $app_id): self
     {
-        $this->app_id = $app_id;
+        $this->app_id = $this->config['app_id'] = $app_id;
         return $this;
     }
 
@@ -136,7 +136,7 @@ class WechatOfficialAccounts
      */
     public function setSecret(string $secret): self
     {
-        $this->secret = $secret;
+        $this->secret = $this->config['secret'] = $secret;
         return $this;
     }
 
@@ -154,7 +154,43 @@ class WechatOfficialAccounts
      */
     public function setResponseType(string $response_type): self
     {
-        $this->response_type = $response_type;
+        $this->response_type = $this->config['response_type'] = $response_type;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return WechatOfficialAccounts
+     */
+    public function setToken(string $token): self
+    {
+        $this->token = $this->config['token'] = $token;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAesKey(): string
+    {
+        return $this->aes_key;
+    }
+
+    /**
+     * @param string $aes_key
+     * @return WechatOfficialAccounts
+     */
+    public function setAesKey(string $aes_key): self
+    {
+        $this->aes_key = $this->config['aes_key'] = $aes_key;
         return $this;
     }
 }

@@ -9,6 +9,7 @@ namespace app\common\controller;
 use EasyWeChat\Kernel\Exceptions\{BadRequestException, InvalidArgumentException, InvalidConfigException};
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Response;
+use think\Exception;
 use think\response\Json;
 use app\common\plugin\{WechatPayment, WechatMiniProgram, WechatOfficialAccounts, WechatWebApplication};
 use app\common\traits\WechatTrait;
@@ -266,14 +267,37 @@ EOF;
 
     /**
      * 测试微信商户支付
-     * @return void
+     * @return Json
+     * @throws GuzzleException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      */
-    public function testWechatMerchant()
+    public function testWechatMerchant(): Json
     {
-        //实例化
+        //方式一 (已经选择了应用，对应可实例化应用的商户支付)
+        $wechatMiniProgram = new WechatMiniProgram;
+        $wechat_mini_program = $wechatMiniProgram->createPay();
+
+        //方式二 (在不知道选择哪个应用的时候，通过获取某个应用的appid去动态化实例化商户支付)
         $wechatMiniProgram = new WechatPayment;
-        //微信网站应用工厂
-        $wechat_mini_program = $wechatMiniProgram->setAppId('aaa')->create();
-        dd($wechat_mini_program);
+        //todo 微信网站应用工厂(appid => 要支付的应用id)
+        $wechat_mini_program = $wechatMiniProgram->setAppId((new WechatMiniProgram)->getAppId())->create();
+
+        //支付参数
+        $pay_param = [
+            'trade_type'=> 'JSAPI', // 支付方式，小程序支付使用JSAPI
+            'body'=> '测试支付',   // 订单说明
+            'out_trade_no'=> 'order_' . rand_str(), // 自定义订单号
+            'total_fee'=> 100, // 单位：分
+            'openid'=> '你的openid' // todo 当前用户的openId
+        ];
+        //生成支付参数
+        $result = $wechat_mini_program->order->unify($pay_param);
+        //生成支付参数
+        if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
+            //生成sdk参数
+            return common_success($wechat_mini_program->jssdk->sdkConfig($result['prepay_id']));
+        }
+        return common_error($result['err_code_des']??'生成失败');
     }
 }

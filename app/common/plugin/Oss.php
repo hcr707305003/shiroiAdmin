@@ -6,7 +6,6 @@
 
 namespace app\common\plugin;
 
-use app\common\model\Setting;
 use lishuo\oss\exception\ConfigException;
 use lishuo\oss\exception\NonsupportStorageTypeException;
 use lishuo\oss\Manager;
@@ -80,15 +79,18 @@ class Oss
      */
     public function __construct(string $type = '')
     {
-        $this->setting = (new Setting())->where(['code' => self::TYPE_LIST[$type ?: $this->type] ?? ''])->findOrEmpty()->toArray();
-        foreach ($this->setting['content'] ?? [] as $param) {
-            if(property_exists(self::class,$param['field']) && in_array($param['field'],$this->config_field))
-                $this->config[$param['field']] = $this->{$param['field']} = $param['content'];
+        $this->setting = setting('cloud.' . self::TYPE_LIST[$type ?: $this->type] ?? '');
+        if ($this->setting) foreach ($this->setting as $k => $v) {
+            if (property_exists(self::class,$k)) {
+                if(in_array($k,$this->config_field)) {
+                    $this->config[$k] = $this->{$k} = $v;
+                }
+            }
         }
 
         //实例化云存储
         $this->storage = Manager::storage($type ?: $this->type)
-        ->init(new StorageConfig($this->appId, $this->appKey, $this->region));
+        ->init(new StorageConfig($this->config['appId'], $this->config['appKey'], $this->config['region']));
     }
 
     /**
