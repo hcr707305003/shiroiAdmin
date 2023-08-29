@@ -9,9 +9,17 @@ namespace app\common\controller;
 use EasyWeChat\Kernel\Exceptions\{BadRequestException, InvalidArgumentException, InvalidConfigException};
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\response\Json;
-use app\common\plugin\{WechatPayment, WechatMiniProgram, WechatOfficialAccounts, WechatWebApplication};
+use app\common\plugin\{FormDesign,
+    TableHandle,
+    WechatPayment,
+    WechatMiniProgram,
+    WechatOfficialAccounts,
+    WechatWebApplication};
 use app\common\traits\WechatTrait;
 use GuzzleHttp\Exception\GuzzleException;
 use Overtrue\Socialite\Exceptions\AuthorizeFailedException;
@@ -24,6 +32,78 @@ class TestController extends CommonBaseController
     {
         //初始化微信工厂
         $this->initWechat();
+    }
+
+    /**
+     * 用于表单动态创建数据表
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function testFormDesign()
+    {
+        //生成一个表单
+        $formDesign = new FormDesign();
+        $content = $formDesign->generate([
+            [
+                'type' => 'date',
+                'field' => 'date_time'
+            ],
+            [
+                'type' => 'time',
+            ],
+            [
+                'type' => 'text',
+            ],
+            [
+                'type' => 'checkbox'
+            ],
+            [
+                'type' => 'multiple_select'
+            ],
+            [
+                'type' => 'color_picker'
+            ],
+            [
+                'type' => 'textarea'
+            ],
+            [
+                'type' => 'image'
+            ],
+            [
+                'type' => 'file'
+            ],
+            [
+                'type' => 'html'
+            ],
+            [
+                'type' => 'rich_text'
+            ],
+            [
+                'type' => 'number'
+            ],
+            [
+                'type' => 'score'
+            ],
+            [
+                'type' => 'select'
+            ],
+            [
+                'type' => 'radio'
+            ],
+            [
+                'type' => 'switch'
+            ]
+        ]);
+        //动态生成数据库表
+        $tableHandle = new TableHandle('test_table');
+//        $tableHandle->generate($content);
+        //保存数据
+        $tableHandle->save($content);
+
+        //获取数据
+        dump($tableHandle->getMode()->select());
     }
 
     public function testMail()

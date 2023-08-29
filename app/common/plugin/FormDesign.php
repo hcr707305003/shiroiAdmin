@@ -266,11 +266,13 @@ class FormDesign
     private array $switch = [
         'default' => [
             [
-                'value' => '开启',
+                'value' => 1,
+                'name' => '开启',
                 'checked' => true
             ],
             [
-                'value' => '关闭',
+                'value' => 0,
+                'name' => '关闭',
             ]
         ]
     ];
@@ -434,9 +436,11 @@ class FormDesign
      * @param int|null $length (截取的长度)
      * @param bool $read_empty (是否读空)
      * @param string $read_empty_field (根据指定的属性来判断读空操作)
+     * @param bool $orderly (是否有序数组)
+     * @param string $orderly_key ($orderly == true,有序数组的键名)
      * @return array
      */
-    public function content(array $content = [], array $extractParam = [], $show_type = 'all', int $offset = 0, ?int $length = null, bool $read_empty = true, string $read_empty_field = 'default'): array
+    public function content(array $content = [], array $extractParam = [], $show_type = 'all', int $offset = 0, ?int $length = null, bool $read_empty = true, string $read_empty_field = 'default', bool $orderly = false, string $orderly_key = 'field'): array
     {
         //提取的参数
         $extract_param_data = [];
@@ -467,10 +471,29 @@ class FormDesign
 
         //只读有值的
         if(!$read_empty) foreach ($extract_param_data as $k => $v) {
-            if(isset($v[$read_empty_field]) && empty($v[$read_empty_field])) unset($extract_param_data[$k]);
+            $isChoose = false;
+            if(isset($v[$read_empty_field])) {
+                switch ($v['type']) {
+                    case 'radio':
+                    case 'checkbox':
+                    case 'select':
+                    case 'multiple_select':
+                        foreach ($v[$read_empty_field] as $chooseValue) {
+                            if(isset($chooseValue['checked']) && $chooseValue['checked']) $isChoose = true;
+                        }
+                        break;
+                    default:
+                        if($v[$read_empty_field]) $isChoose = true;
+                }
+            }
+            if(!$isChoose) unset($extract_param_data[$k]);
         }
 
-        return array_slice($extract_param_data, $offset, $length);
+        $list = [];
+        if($orderly) foreach (array_slice($extract_param_data, $offset, $length) as $v) {
+            $list[$v[$orderly_key]] = $v;
+        }
+        return $orderly ? $list: array_slice($extract_param_data, $offset, $length);
     }
 
     /**
