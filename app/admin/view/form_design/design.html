@@ -30,7 +30,7 @@
 <!--表单设计-->
 {js href="__ADMIN_PLUGINS__/jquery/jquery_3.6.4.min.js" /}
 {js href="__ADMIN_PLUGINS__/form-design/vendor.js" /}
-{js href="__ADMIN_PLUGINS__/form-design/formbuilder-min.js" /}
+{js href="__ADMIN_PLUGINS__/form-design/formbuilder.js" /}
 <script>
     $(function () {
         const fb = new Formbuilder({
@@ -76,6 +76,13 @@
         });
         fb.on('save', function (payload) {
             console.log(payload);
+            // 直接发起$.post(URL, data, [callback])
+            $.post("{:url('design')}",
+                JSON.parse(payload),
+                function (res) {    // 回调函数
+                    console.log(res);
+                }
+            )
         })
     });
 </script>
