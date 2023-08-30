@@ -6,14 +6,20 @@
 
 namespace app\admin\controller;
 
+use Exception;
+
 class FormDesignController extends AdminBaseController
 {
     /**
-     * todo 暂时有问题，影响pjax刷新
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function index(): string
+    {
+        return $this->fetch();
+    }
+
+    public function design(): string
     {
         return $this->fetch();
     }

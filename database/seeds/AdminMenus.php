@@ -678,17 +678,26 @@ class AdminMenus extends Seeder
                             ]
                         ]
                     ],
-                    //todo 测试案例（三）测试未通过
-//                    [
-//                        "name" => "测试案例（三）",
-//                        "url" => "admin/form_design/index",
-//                        "icon" => "fas fa-list",
-//                        "is_show" => 1,
-//                        "is_top" => 0,
-//                        "sort_number" => 1000,
-//                        "log_method" => "不记录",
-//                        "Sons" => []
-//                    ]
+                    [
+                        "name" => "测试案例（三）",
+                        "url" => "admin/form_design/index",
+                        "icon" => "fas fa-list",
+                        "is_show" => 1,
+                        "is_top" => 0,
+                        "sort_number" => 1000,
+                        "log_method" => "不记录",
+                        "Sons" => [
+                            [
+                                "name" => "表单设计页",
+                                "url" => "admin/form_design/design",
+                                "icon" => "fa-pencil-alt",
+                                "is_show" => 0,
+                                "is_top" => 0,
+                                "sort_number" => 1000,
+                                "log_method" => "不记录",
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ];
