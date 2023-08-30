@@ -564,6 +564,30 @@ class Setting extends Seeder
                 ],
                 "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
                 "sort_number" => 1000
+            ],
+            [
+                "setting_group_id" => 6,
+                "name" => "抖音配置",
+                "description" => "抖音配置",
+                "code" => "tiktok",
+                "content" => [
+                    [
+                        "name" => "小程序ID",
+                        "field" => "appid",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "小程序ID"
+                    ],
+                    [
+                        "name" => "小程序的APP Secret",
+                        "field" => "appsecret",
+                        "type" => "text",
+                        "content" => "",
+                        "option" => "小程序的 APP Secret，可以在开发者后台获取"
+                    ]
+                ],
+                "is_forced_update" => false, //seed配置- 选填 - 是否覆盖更新原有数据
+                "sort_number" => 1000
             ]
         ];
 

@@ -16,6 +16,7 @@ use think\Exception;
 use think\response\Json;
 use app\common\plugin\{FormDesign,
     TableHandle,
+    TikTok,
     WechatPayment,
     WechatMiniProgram,
     WechatOfficialAccounts,
@@ -32,6 +33,37 @@ class TestController extends CommonBaseController
     {
         //初始化微信工厂
         $this->initWechat();
+    }
+
+    public function testTiktok()
+    {
+        //实例化抖音api类
+        $tiktok = new TikTok();
+        //获取抖音session （code或anonymous_code任意传一个）
+        $data = $tiktok->code2Session(request()->only(['code', 'anonymous_code']));
+        //todo 模拟数据
+//        $data = [
+//            "err_no" => 0,
+//            "err_tips" => "success",
+//            "data" =>  [
+//                "session_key" => "V+ZBBMzvTBrEmvzz4yWiZA==",
+//                "openid" => "_000rdE_iWG1_uiizJnuPICm0DUsShfzUTG5",
+//                "anonymous_openid" => "",
+//                "unionid" => "530d6303-5181-4a96-8b05-0db3842b7401",
+//                "dopenid" => ""
+//            ]
+//        ];
+        dump($data);
+        //处理用户信息
+        if(($data['err_no'] ?? -1) == 0) {
+            //通过session_key 和 前端传的encryptedData、iv进行解密，获取手机号信息
+            if(($encryptedData = input('encryptedData')) && ($iv = input('iv'))) {
+                if(($mobileData = $tiktok->decrypt($encryptedData,$data['data']['session_key'], $iv)) && is_array($mobileData)) {
+                    dump($mobileData);
+                }
+            }
+        }
+        return common_error($data['err_tips'] ?? '登录失败');
     }
 
     /**
@@ -178,6 +210,10 @@ class TestController extends CommonBaseController
         $wechat_mini_program = $wechatMiniProgram->create();
         //微信小程序支付
         $wechat_mini_program_pay = $wechatMiniProgram->createPay();
+
+//        $param = request()->post(['code', 'invite_code']);
+//        $user = $wechat_mini_program->auth->session($param['code']);
+
         dd($wechat_mini_program,$wechat_mini_program_pay);
     }
 

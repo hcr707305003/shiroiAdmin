@@ -307,5 +307,15 @@ class SettingController extends AdminBaseController
         return $this->show(5);
     }
 
+    /**
+     * 字节
+     * @return string
+     * @throws Exception
+     */
+    public function bytedance(): string
+    {
+        return $this->show(6);
+    }
+
 }//append_menu
 //请勿删除上面的注释，上面注释为自动追加菜单方法标记

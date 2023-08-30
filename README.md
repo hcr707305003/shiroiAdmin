@@ -106,7 +106,7 @@ php think reset:admin_password --uid=1 123456
        2. (方法二) 修改 `database/seeds/Setting.php` 文件后（注意： `"is_forced_update" => true`才会覆盖原配置），执行`php think seed:run -s Setting` 
     
      - 使用插件  
-    ```phpt
+    ```php
     //上传的文件
     $file = request()->file('file');
     
@@ -130,4 +130,49 @@ php think reset:admin_password --uid=1 123456
     //删除
     $delete_info = $oss->delete(['shiroi.png']);
     dump($delete_info);
+    ```
+
+    #### 4. 抖音插件(未完善)
+    ```php
+    //实例化抖音api类
+    $tiktok = new \app\common\plugin\TikTok();
+    
+    //获取抖音session （code或anonymous_code任意传一个）
+    $data = $tiktok->code2Session(request()->only(['code', 'anonymous_code']));
+    
+    //通过session_key 和 前端传的encryptedData、iv进行解密，获取手机号信息
+    if(($encryptedData = input('encryptedData')) && ($iv = input('iv'))) {
+        if(($mobileData = $tiktok->decrypt($encryptedData,$data['data']['session_key'], $iv)) && is_array($mobileData)) {
+                dump($mobileData);
+            }
+        }
+    ```
+    
+    #### 5. 微信插件(小程序、公众号、网站应用、商户支付等)
+    ```php
+    //接收的参数
+    $param = request()->post(['code', 'invite_code']);
+    //实例化
+    $wechatMiniProgram = new \app\common\plugin\WechatMiniProgram;
+    //微信小程序工厂
+    $wechat_mini_program = $wechatMiniProgram->create();
+    //微信小程序支付
+    $wechat_mini_program_pay = $wechatMiniProgram->createPay();
+    //获取用户信息
+    $data = $wechat_mini_program->auth->session($param['code']);
+    dump($data);
+    ```
+    
+    #### 6. 邮箱插件
+    ```php
+    dump((new \app\common\plugin\Mailer())
+            //要发送给的邮箱以及标题
+            ->generate('xxxxxx@qq.com', '哈哈哈哈')
+            //要发送的内容
+            ->setContent('<img src="{image}"/>图片测试', [
+                'embed:image' => public_path('uploads/image') . 'user.png' //本地文件路径 embed:image => {image}
+            ])
+            //要发送的单行文本
+            ->setLine('这是一行文本')
+            ->send());
     ```
