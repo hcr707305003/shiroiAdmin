@@ -9,3 +9,5 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
+
+Route::get('log_view', "\Shiroi\ThinkLogViewer\LogServer@index");

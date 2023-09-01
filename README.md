@@ -176,3 +176,7 @@ php think reset:admin_password --uid=1 123456
             ->setLine('这是一行文本')
             ->send());
     ```
+    
+    #### 7. 日志系统
+     - 访问浏览器 `http://域名/log_view`即可
+     - 具体使用方式 [shiroi/think-log-viewer](https://packagist.org/packages/shiroi/think-log-viewer)

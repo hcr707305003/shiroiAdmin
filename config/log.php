@@ -7,7 +7,7 @@ return [
     // 默认日志记录通道
     'default'      => env('log.channel', 'file'),
     // 日志记录级别
-    'level'        => [],
+    'level'        => ['error','notice','info','debug'],
     // 日志类型记录的通道 ['error'=>'email',...]
     'type_channel' => [],
     // 关闭全局日志写入
@@ -21,7 +21,7 @@ return [
             // 日志记录方式
             'type'           => 'File',
             // 日志保存目录
-            'path'           => '',
+            'path'           => 'log',
             // 单文件日志写入
             'single'         => false,
             // 独立日志级别
@@ -36,6 +36,8 @@ return [
             'close'          => false,
             // 日志输出格式化
             'format'         => '[%s][%s] %s',
+            // 日志输出的时间格式
+            'time_format'    =>  'Y-m-d H:i:s',
             // 是否实时写入
             'realtime_write' => false,
         ],

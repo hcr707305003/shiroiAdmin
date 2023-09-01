@@ -12,3 +12,5 @@ docker/mysql/5.7.26/data
 docker/log/apache2
 public/uploads/uploads
 public/tp-mailer
+log
+public/log
