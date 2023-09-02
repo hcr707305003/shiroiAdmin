@@ -62,7 +62,7 @@
         #数据填充
         php think seed:run
         ```
-  - ### docker安装 (访问`http://127.0.0.1:9001`)
+  - ### docker安装 (访问`http://localhost:9001`)
     ```
     //启动
     docker-compose --env-file ./docker/.env up -d --build
