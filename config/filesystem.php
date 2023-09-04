@@ -1,18 +1,4 @@
 <?php
-
-// 常用图片后缀
-const IMAGE_EXT  = 'png,jpg,jpeg,gif,bmp,ico,svg';
-// 常用图片mime
-const IMAGE_MIME = 'image/png,image/jpeg,image/gif,image/bmp,image/ico,image/svg';
-// 常用视频后缀
-const VIDEO_EXT = 'mp4,mov,mpg,mpeg,rmvb,avi,rm,mkv,flv,wmv';
-// 常用音频后缀
-const AUDIO_EXT = 'mp4,wav,mid,flac,ape,m4a,ogg,mid';
-// 常用文本后缀
-const TEXT_EXT = 'txt,doc,docx,xls,xlsx,ppt,pptx,pdf,md,xml';
-// 常用压缩文件后缀
-const ARCHIVE_EXT = 'rar,zip,tar,gz,7z,bz2,cab,iso';
-
 return [
     // 默认磁盘
     'default'          => env('filesystem.driver', 'local'),
@@ -34,16 +20,16 @@ return [
             'validate'   => [
                 'image' => [
                     'fileSize:10485760',// 10MB
-                    'fileExt:' . IMAGE_EXT,
-                    'fileMime:' . IMAGE_MIME,
+                    'fileExt:png,jpg,jpeg,gif,bmp,ico,svg',
+                    'fileMime:image/png,image/jpeg,image/gif,image/bmp,image/ico,image/svg',
                 ],
                 'video' => [
                     'fileSize:209715200',// 200MB
-                    'fileExt:' . VIDEO_EXT,
+                    'fileExt:mp4,mov,mpg,mpeg,rmvb,avi,rm,mkv,flv,wmv',
                 ],
                 'file'  => [
                     'fileSize:419430400',// 50MB
-                    'fileExt:' . IMAGE_EXT . ',' . VIDEO_EXT . ',' . AUDIO_EXT . ',' . ARCHIVE_EXT . ',' . TEXT_EXT
+                    'fileExt:png,jpg,jpeg,gif,bmp,ico,svg,mp4,mov,mpg,mpeg,rmvb,avi,rm,mkv,flv,wmv,mp4,wav,mid,flac,ape,m4a,ogg,mid,txt,doc,docx,xls,xlsx,ppt,pptx,pdf,md,xml,rar,zip,tar,gz,7z,bz2,cab,iso'
                 ]
             ],
         ],

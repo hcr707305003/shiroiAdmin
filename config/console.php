@@ -16,5 +16,15 @@ return [
         'reset:admin_password' => \app\command\ResetAdminPassword::class,
         // 一键创建后台视图模块
         'create:admin_background_view' => \app\command\CreateBackgroundView::class,
+
+
+
+        //socket
+        //admin模块的socket服务
+        'admin_socket:run' => \app\command\socket\AdminSocketServer::class,
+        //api的模块的socket服务
+        'api_socket:run' => \app\command\socket\ApiSocketServer::class,
+        //index模块的socket
+        'index_socket:run' => \app\command\socket\IndexSocketServer::class,
     ],
 ];

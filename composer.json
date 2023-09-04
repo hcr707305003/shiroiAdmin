@@ -27,6 +27,7 @@
         "topthink/think-view": "^1.0",
         "topthink/think-migration": "^3.0",
         "topthink/think-captcha": "^3.0",
+        "topthink/think-worker": "^3.0",
         "phpoffice/phpspreadsheet": "^1.16",
         "mk-j/php_xlsxwriter": "^0.38.0",
         "ext-openssl": "*",
