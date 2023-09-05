@@ -1,9 +1,11 @@
 <?php
-declare (strict_types = 1);
+/**
+ * User: Shiroi
+ * EMail: 707305003@qq.com
+ */
 
 namespace app\command\socket;
 
-use app\index\socket\Server;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -11,15 +13,15 @@ use think\console\input\Option;
 use think\console\Output;
 use Workerman\Worker;
 
-class IndexSocketServer extends Command
+class SocketServer extends Command
 {
     protected function configure()
     {
         // 指令配置
-        $this->setName('index model socket server')
+        $this->setName('all model socket server')
             ->addArgument('action', Argument::OPTIONAL, "start|stop|restart|reload|status|connections", 'start')
             ->addOption('mode', 'm', Option::VALUE_OPTIONAL, 'Run the workerman server in daemon mode.')
-            ->setDescription('index model socket server');
+            ->setDescription('all model socket server: php think socket:run start --mode d');
     }
 
     protected function execute(Input $input, Output $output)
@@ -37,8 +39,10 @@ class IndexSocketServer extends Command
             $argv[] = '-g';
         }
 
-        //开启的服务
-        new Server(env('index.socket_port', '3333'));
+        //开启的所有服务
+        new \app\admin\socket\Server(env('admin.socket_port', 1111));
+        new \app\api\socket\Server(env('api.socket_port', 2222));
+        new \app\index\socket\Server(env('index.socket_port', 3333));
         //执行所有服务
         Worker::runAll();
     }

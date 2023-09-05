@@ -20,11 +20,13 @@ return [
 
 
         //socket
+        //所有模块socket服务
+        'socket:run' => \app\command\socket\SocketServer::class,
         //admin模块的socket服务
         'admin_socket:run' => \app\command\socket\AdminSocketServer::class,
         //api的模块的socket服务
         'api_socket:run' => \app\command\socket\ApiSocketServer::class,
-        //index模块的socket
+        //index模块的socket服务
         'index_socket:run' => \app\command\socket\IndexSocketServer::class,
     ],
 ];

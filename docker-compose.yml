@@ -38,6 +38,9 @@ services:
         container_name: shiroi-admin-web
         ports:
             - "9001:80" # Docker容器端口
+            - "9111:1111" # admin socket
+            - "9112:2222" # api socket
+            - "9113:3333" # index socket
         environment:
             - TZ=Asia/Shanghai
         deploy:
@@ -70,6 +73,9 @@ services:
             - ./docker/log/apache2/.:/var/log/apache2 #映射apache访问日志
 
             - ./docker/php/7.4/php.ini:/usr/local/etc/php/php.ini #映射php配置
+
+            - ./docker/supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf #supervisor配置文件
+            - ./docker/supervisor/log/.:/var/www/html/supervisor/log #supervisor日志
 #        env_file:
 #            - .env
         restart: always
