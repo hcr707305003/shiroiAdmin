@@ -180,3 +180,51 @@ php think reset:admin_password --uid=1 123456
     #### 7. 日志系统
      - 访问浏览器 `http://域名/log_view`即可
      - 具体使用方式 [shiroi/think-log-viewer](https://packagist.org/packages/shiroi/think-log-viewer)
+
+    #### 8. socket服务
+    - 本地运行 
+      ```php
+      //运行所有服务(window下无法运行所有服务，默认运行第一个服务)
+      php think socket:run start
+    
+      //运行admin模块服务
+      php think admin_socket:run start
+    
+      //运行api模块服务
+      php think api_socket:run start
+    
+      //运行index模块服务
+      php think index_socket:run start    
+      ```
+
+    - docker 运行
+    
+        修改`docker/supervisor/supervisord.conf`文件
+        ```config
+        [supervisord]
+        nodaemon=true
+        
+        #开启所有服务
+        [program:all_socket]
+        command=php think socket:run start
+        directory=/var/www/html
+        stdout_logfile=/var/www/html/supervisor/log/all_socket.log
+        
+        #开启admin模块服务
+        #[program:admin_socket]
+        #command=php think admin_socket:run start --mode d
+        #directory=/var/www/html
+        #stdout_logfile=/var/www/html/supervisor/log/admin_socket.log
+        
+        #开启api模块服务
+        #[program:api_socket]
+        #command=php think api_socket:run start --mode d
+        #directory=/var/www/html
+        #stdout_logfile=/var/www/html/supervisor/log/api_socket.log
+        
+        #开启index模块服务
+        #[program:index_socket]
+        #command=php think index_socket:run start --mode d
+        #directory=/var/www/html
+        #stdout_logfile=/var/www/html/supervisor/log/index_socket.log
+        ```
