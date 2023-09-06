@@ -76,6 +76,8 @@ services:
 
             - ./docker/supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf #supervisor配置文件
             - ./docker/supervisor/log/.:/var/www/html/supervisor/log #supervisor日志
+
+            - ./docker/ImageMagick-6/policy.xml:/etc/ImageMagick-6/policy.xml #修改 ImageMagick 安全策略
 #        env_file:
 #            - .env
         restart: always

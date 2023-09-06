@@ -15,6 +15,7 @@ use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\response\Json;
 use app\common\plugin\{FormDesign,
+    Image,
     TableHandle,
     TikTok,
     WechatPayment,
@@ -33,6 +34,13 @@ class TestController extends CommonBaseController
     {
         //初始化微信工厂
         $this->initWechat();
+    }
+
+    public function testImage()
+    {
+        $image = new Image();
+        $data = $image->setPdf(public_path() . 'test.pdf')->pdfToImage();
+        dd($data);
     }
 
     public function testTiktok()
