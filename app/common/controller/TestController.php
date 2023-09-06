@@ -39,7 +39,10 @@ class TestController extends CommonBaseController
     public function testImage()
     {
         $image = new Image();
-        $data = $image->setPdf(public_path() . 'test.pdf')->pdfToImage();
+        //pdf测试文件
+        $pdf = public_path() . 'test.pdf';
+        //pdf转图片
+        $data = $image->setPdf($pdf)->pdfToImage();
         dd($data);
     }
 

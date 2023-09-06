@@ -36,6 +36,13 @@ class Image
      * pdf转image
      * @param int $page (页数,不传默认拿所有)
      * @param bool $isEach (是否遍历 (从 1 到 $page 之间))
+     * @example :
+     *  1.安装ghostscript => https://ghostscript.com/releases/gsdnld.html
+     *  2.安装imagemagick => http://www.imagemagick.org/script/download.php
+     *  3.安装php-imagick扩展(php7.4) => https://pecl.php.net/package/imagick/3.6.0/windows
+     *  4.安装composer扩展
+     *     一. composer require ext-imagick
+     *     二. composer require spatie/pdf-to-image
      * @throws PageDoesNotExist|PdfDoesNotExist
      */
     public function pdfToImage(int $page = -1, bool $isEach = true): array
