@@ -43,7 +43,8 @@
         "cattong/think-mailer": "^1.0",
         "shiroi/think-log-viewer": "^1.1",
         "ext-imagick": "*",
-        "spatie/pdf-to-image": "^2.2"
+        "spatie/pdf-to-image": "^2.2",
+        "php-ffmpeg/php-ffmpeg": "^0.19.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

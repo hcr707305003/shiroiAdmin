@@ -6,6 +6,10 @@ WORKDIR /var/www/html
 RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list && \
     sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
 
+# 安装ffmpeg
+RUN apt-get update && \
+    apt-get install ffmpeg -y
+
 #安装 imagick PHP 扩展
 RUN apt-get update \
     && apt-get install -y libmagickwand-dev \
@@ -14,10 +18,9 @@ RUN apt-get update \
 
 # 复制项目文件
 COPY --chown=www-data:www-data ./ /var/www/html
-# COPY ./ /var/www/html
 
 #处理env文件问题
-COPY ./docker/.env /var/www/html/.env
+#COPY ./docker/.env /var/www/html/.env
 
 #复制进程管理器文件
 COPY ./docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

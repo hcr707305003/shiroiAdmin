@@ -2,6 +2,7 @@
 
 namespace app\common\plugin;
 
+use app\common\traits\PluginTrait;
 use Spatie\PdfToImage\Exceptions\PageDoesNotExist;
 use Spatie\PdfToImage\Exceptions\PdfDoesNotExist;
 
@@ -27,6 +28,8 @@ class Image
     //设置目录（根目录下）
     protected string $path = "public/uploads";
 
+    use PluginTrait;
+
     public function __construct()
     {
         $this->path = root_path($this->path);
@@ -50,7 +53,7 @@ class Image
         //存储的数据
         $data = [];
         //设置日期目录
-        $path = $this->path . '/' . date('Ymd/') . uniqid();
+        $path = $this->getDatePath() . uniqid();
         //实例化对象之前加反斜杠，注意pdf文件的路径
         $pdf = new \Spatie\PdfToImage\Pdf($this->pdf);
         //创建目录

@@ -14,7 +14,8 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\response\Json;
-use app\common\plugin\{FormDesign,
+use app\common\plugin\{Ffmpeg,
+    FormDesign,
     Image,
     TableHandle,
     TikTok,
@@ -34,6 +35,17 @@ class TestController extends CommonBaseController
     {
         //初始化微信工厂
         $this->initWechat();
+    }
+
+    public function testFfmpeg()
+    {
+        //设置文件
+        $source = public_path() . 'test.mp4';
+        $ffmpeg = new Ffmpeg($source);
+        //获取视频第几秒的图片
+//        dd($ffmpeg->getImageFormSeconds(10));
+        //在视频中设置水印
+        dd($ffmpeg->setWatermarkToVideo(public_path() . 'test.png'));
     }
 
     public function testImage()
