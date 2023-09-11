@@ -228,3 +228,16 @@ php think reset:admin_password --uid=1 123456
         #directory=/var/www/html
         #stdout_logfile=/var/www/html/supervisor/log/index_socket.log
         ```
+
+    #### 9. ffmpeg流媒体
+    ```php
+    //设置文件
+    $source = public_path() . 'test.mp4';
+    //实例化ffmpeg类
+    $ffmpeg = new \app\common\plugin\Ffmpeg();
+    //获取视频第几秒的图片
+    //dump($ffmpeg->getImageFormSeconds(10));
+    //在视频中设置水印
+    dump($ffmpeg->setWatermarkToVideo(public_path() . 'test.png'));
+    ```
+    具体使用方式 [php-ffmpeg/php-ffmpeg](https://packagist.org/packages/php-ffmpeg/php-ffmpeg)
