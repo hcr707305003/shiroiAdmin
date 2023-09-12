@@ -220,13 +220,12 @@ class TableHandle
      */
     public function generate(array $formContent = [], string $comment = '', bool $isUpdateAll = true)
     {
-        $table = (new Table($this->tableName))
-            ->setAdapter($this->setAdapter())
-            ->setOptions([
-                'comment' => $comment ?: $this->tableName,
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4'
-            ]);
+        $table = (new Table($this->tableName, [
+            'comment' => $comment ?: $this->tableName,
+            'engine' => 'InnoDB',
+            'encoding' => 'utf8mb4'
+        ]))
+            ->setAdapter($this->setAdapter());
         $columns = [];
         $formColumns = [];
         foreach ($formContent as $content) {
