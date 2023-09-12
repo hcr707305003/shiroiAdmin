@@ -241,3 +241,57 @@ php think reset:admin_password --uid=1 123456
     dump($ffmpeg->setWatermarkToVideo(public_path() . 'test.png'));
     ```
     具体使用方式 [php-ffmpeg/php-ffmpeg](https://packagist.org/packages/php-ffmpeg/php-ffmpeg)
+
+    #### 10. 图片gd库调用类
+    ```php
+    //写入垂直居中文字、并设置颜色rgb(32, 40, 136)
+    (new \app\common\plugin\ImageGd())
+        ->appendContent('hello', [
+            'position' => ImageGD::FONT_CENTER,
+            'color' => [32, 40, 136]
+        ])
+        ->show();
+    
+    
+    //写入图片并设置居中
+    (new ImageGd())
+        //网路图片和本地图片皆可
+        ->appendContent(public_path() . 'test.png', [
+            'position' => ImageGD::FONT_CENTER,
+            'width' => 200,
+            'height' => 150,
+        ], 'image')
+        ->show();
+    
+    //写入图片和文字并设置同行居中
+    (new ImageGd())
+        //网路图片和本地图片皆可
+        ->appendContent([
+            [
+                'type' => 'image',
+                'content' => public_path() . 'test.png',
+                'width' => 200,
+                'height' => 150
+            ],
+            [
+                'content' => ' hello', //想实现间隔可以空格分离
+                'color' => [32, 40, 136],
+                'size' => 30
+            ]
+        ], [
+            'position' => ImageGD::FONT_CENTER,
+            'display' => 'inline_block',
+        ])
+        ->show();
+    
+    
+    //设置背景图并设置文字
+    //获取背景图
+    $bg = 'https://img.xjh.me/img/63083657_p0.jpg';
+    //设置背景图
+    (new ImageGd($bg))->appendContent('你好', [
+        'position' => ImageGD::FONT_CENTER,
+        'color' => [32, 40, 136],
+        'size' => 30
+    ])->show();
+    ```

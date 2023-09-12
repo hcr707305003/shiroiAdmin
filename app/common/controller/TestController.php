@@ -17,6 +17,7 @@ use think\response\Json;
 use app\common\plugin\{Ffmpeg,
     FormDesign,
     Image,
+    ImageGd,
     TableHandle,
     TikTok,
     WechatPayment,
@@ -35,6 +36,58 @@ class TestController extends CommonBaseController
     {
         //初始化微信工厂
         $this->initWechat();
+    }
+
+    public function testImageGd()
+    {
+        //写入垂直居中文字、并设置颜色rgb(32, 40, 136)
+//        (new ImageGd())
+//            ->appendContent('hello', [
+//                'position' => ImageGD::FONT_CENTER,
+//                'color' => [32, 40, 136]
+//            ])
+//            ->show();
+
+        //写入图片并设置居中
+//        (new ImageGd())
+//            //网路图片和本地图片皆可
+//            ->appendContent('https://pics0.baidu.com/feed/d043ad4bd11373f0efffe991ada08ef1faed0431.jpeg', [
+//                'position' => ImageGD::FONT_CENTER,
+//                'width' => 200,
+//                'height' => 150,
+//
+//            ], 'image')
+//            ->show();
+
+        //写入图片和文字并设置同行居中
+//        (new ImageGd())
+//            //网路图片和本地图片皆可
+//            ->appendContent([
+//                [
+//                    'type' => 'image',
+//                    'content' => 'https://pics0.baidu.com/feed/d043ad4bd11373f0efffe991ada08ef1faed0431.jpeg',
+//                    'width' => 200,
+//                    'height' => 150
+//                ],
+//                [
+//                    'content' => ' hello', //想实现间隔可以空格分离
+//                    'color' => [32, 40, 136],
+//                    'size' => 30
+//                ]
+//            ], [
+//                'position' => ImageGD::FONT_CENTER,
+//                'display' => 'inline_block',
+//            ])
+//            ->show();
+
+        //设置背景图并设置文字
+        //获取背景图
+        $bg = curl_http('https://img.xjh.me/random_img.php?return=json')->getResponse()->img ?? '';
+        //设置背景图
+        (new ImageGd('http:' . $bg))->appendContent(public_path() . 'test.png', [
+            'position' => ImageGD::FONT_CENTER
+        ], 'image')->show();
+
     }
 
     public function testFfmpeg()

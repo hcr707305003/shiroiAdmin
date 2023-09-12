@@ -6,7 +6,7 @@ use app\common\traits\PluginTrait;
 
 /**
  * FFMPEG操作类
- * @tip 如果使用容器化会导致性能不佳(请谨慎使用)
+ * @tip 如果在容器化下使用会导致性能不佳(请谨慎使用)
  * User: Shiroi
  * EMail: 707305003@qq.com
  */

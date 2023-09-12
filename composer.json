@@ -35,6 +35,7 @@
         "ext-curl": "*",
         "ext-bcmath": "*",
         "ext-fileinfo": "*",
+        "ext-gd": "*",
         "topthink/think-filesystem": "^2.0",
         "php-curl-class/php-curl-class": "^9.17",
         "mathieuviossat/arraytotexttable": "^1.0",

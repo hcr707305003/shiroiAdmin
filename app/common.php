@@ -2,6 +2,7 @@
 // 应用公共文件
 
 
+use Curl\Curl;
 use think\facade\Config;
 
 if (!function_exists('get_file_type')) {
