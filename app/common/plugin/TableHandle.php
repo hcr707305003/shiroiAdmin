@@ -275,13 +275,12 @@ class TableHandle
             foreach (array_diff(array_keys($existsColumns), array_keys($columns)) as $field) {
                 $table->removeColumn($field);
             }
-            $table->update();
         } else {
             foreach (array_merge($columns, $this->defaultColumns) as $field => $column) {
                 $table = $table->addColumn($field, $column['type'], $column['option']);
             }
-            $table->create();
         }
+        $table->save();
     }
 
     /**
