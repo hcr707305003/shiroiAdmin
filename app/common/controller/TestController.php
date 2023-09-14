@@ -14,7 +14,8 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\response\Json;
-use app\common\plugin\{Ffmpeg,
+use app\common\plugin\{ClassHandle,
+    Ffmpeg,
     FormDesign,
     Image,
     ImageGd,
@@ -38,6 +39,48 @@ class TestController extends CommonBaseController
         $this->initWechat();
     }
 
+    public function testCreateClass()
+    {
+        $createClass = new ClassHandle();
+        $createClass
+            //设置默认set方法内容
+            ->setSetContent([
+                'return' => 'void', //是否保留返回值
+                'content' => '$this->{property} = ${property};' //设置默认set方法内容
+            ])
+            //设置默认get方法内容
+            ->setGetContent([
+                'argument' => false, //是否保留参数
+                'return' => '{type}', //是否保留返回值
+                'content' => 'return $this->{property};' //设置默认get方法内容
+            ])
+            ->setMethod('method_1', [
+                'name' => [
+                    'default' => 'shiroi',
+                ],
+                'age' => 'int'
+            ], [
+                'content' => 'echo "姓名：{$name}，年龄：{$age}";'
+            ])
+            ->setProperty('property_1', 'string', '', [
+                'access' => 'private'
+            ], [
+                'gg' => [
+                    'argument' => false, //是否保留参数
+                    'return' => 'self',
+                    'content' => 'return $this;',
+                    'access' => 'private'
+                ]
+                ,
+                'get',
+                'set'
+            ])
+            ->create('Test1Controller', 'app/common/controller');
+    }
+
+    /**
+     * @return void
+     */
     public function testImageGd()
     {
         //写入垂直居中文字、并设置颜色rgb(32, 40, 136)

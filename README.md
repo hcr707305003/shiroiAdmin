@@ -254,7 +254,7 @@ php think reset:admin_password --uid=1 123456
     
     
     //写入图片并设置居中
-    (new ImageGd())
+    (new \app\common\plugin\ImageGd())
         //网路图片和本地图片皆可
         ->appendContent(public_path() . 'test.png', [
             'position' => ImageGD::FONT_CENTER,
@@ -264,7 +264,7 @@ php think reset:admin_password --uid=1 123456
         ->show();
     
     //写入图片和文字并设置同行居中
-    (new ImageGd())
+    (new \app\common\plugin\ImageGd())
         //网路图片和本地图片皆可
         ->appendContent([
             [
@@ -289,9 +289,53 @@ php think reset:admin_password --uid=1 123456
     //获取背景图
     $bg = 'https://img.xjh.me/img/63083657_p0.jpg';
     //设置背景图
-    (new ImageGd($bg))->appendContent('你好', [
+    (new \app\common\plugin\ImageGd($bg))->appendContent('你好', [
         'position' => ImageGD::FONT_CENTER,
         'color' => [32, 40, 136],
         'size' => 30
     ])->show();
+    ```
+
+    #### 11. class动态创建类
+    ```php
+    //实例化
+    (new \app\common\plugin\ClassHandle())
+        //设置默认set方法内容
+        ->setSetContent([
+            'return' => 'void', //是否保留返回值
+            'content' => '$this->{property} = ${property};' //设置默认set方法内容
+        ])
+        //设置默认get方法内容
+        ->setGetContent([
+            'argument' => false, //是否保留参数
+            'return' => '{type}', //是否保留返回值
+            'content' => 'return $this->{property};' //设置默认get方法内容
+        ])
+        //设置方法
+        ->setMethod('method_1', [
+            //设置参数 name、age
+            'name' => [
+                'default' => 'shiroi',
+            ],
+            'age' => 'int'
+        ], [
+            'content' => 'echo "姓名：{$name}，年龄：{$age}";' //设置方法内容
+        ])
+        //设置属性
+        ->setProperty('property_1', 'string', '', [
+            'access' => 'private' //设置属性访问权限
+        ], [
+            //设置自定义方法
+            'test' => [
+                'argument' => false, //是否保留参数
+                'return' => 'self', //是否保留返回值
+                'content' => 'return $this;', //设置方法内容
+                'access' => 'private' //设置方法访问权限
+            ],
+            //设置get set方法
+            'get',
+            'set'
+        ])
+        //设置类名以及命名空间
+        ->create('Test1Controller', 'app/common/controller');
     ```
