@@ -51,7 +51,7 @@ class ClassHandle
     public function create(string $className, string $nameSpace)
     {
         //设置的命名空间
-        $this->namespace = str_replace(['/'],'\\',$nameSpace);
+        $this->namespace = str_replace(['/'],'\\', trim(trim($nameSpace, '\\'), '/'));
         //设置的目录
         $this->path = root_path(str_replace(['\\', ' '],'/',$nameSpace));
         //遍历所有方法
@@ -97,7 +97,7 @@ php;
         //请求的参数
         $param = ($content['argument'] ?? true) ? $this->generateParams($params): '';
         //注解生成
-        $comment = $this->generateMethodComment($params, $content['argument'] ?? true);
+        $comment = $this->generateMethodComment($params, $content);
         //设置是否是私有方法还是公有方法
         $access = $content['access'] ?? 'public';
         $this->methods[$methodName] = <<<php
@@ -121,6 +121,8 @@ php;
     {
         //设置的属性名私有还是公有
         $access = $option['access'] ?? 'public';
+        //注解
+        $description = $option['description'] ?? '';
         //默认值
         $defaultPropertyValue = $this->generateParam($propertyType, ['default' => $propertyValue, 'type' => $propertyType]);
         //通过get set方法获取
@@ -148,7 +150,7 @@ php;
         //属性
         $this->property[$propertyName] = <<<php
     /**
-     * @var {$propertyType} 
+     * @var {$propertyType} {$description}
      */
     {$access} {$propertyType} \${$propertyName} = {$defaultPropertyValue};
 php;
@@ -168,13 +170,22 @@ php;
         return implode(', ', $params);
     }
 
-    private function generateMethodComment(array $params, bool $argument = true): string
+    private function generateMethodComment(array $params, array $option = []): string
     {
         //设置注解的空格数
         $space = '';
         $method_comment_spaces = $this->config['method_comment_spaces'] ?? 4;
         while ($method_comment_spaces--) $space .= $this->config['spaces'] ?? "\x20";
-        $comment = "{$space}/**\r";
+        $comment = <<<PHP
+{$space}/**
+
+PHP;
+        //设置描述
+        isset($option['description']) && $comment .= <<<PHP
+{$space} * {$option['description']}
+
+PHP;
+
         $commentParam = "";
         //遍历所有参数
         foreach ($params as $key => $value) {
@@ -185,9 +196,15 @@ php;
             //默认值
             $default = ($is_default ? $this->generateParam($type, $value): '');
             //设置参数
-            $commentParam .= "{$space} * @param {$type} \${$key} {$default}\r";
+            $commentParam .= <<<PHP
+{$space} * @param {$type} \${$key} {$default}
+
+PHP;
         }
-        $comment .= ($argument? $commentParam: '') . "{$space} * @return void\r{$space} */";
+        $comment .= (($option['argument'] ?? true)? $commentParam: '') . <<<PHP
+{$space} * @return void\r{$space} */
+PHP;
+;
         return $comment;
     }
 

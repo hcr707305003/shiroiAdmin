@@ -8,6 +8,7 @@ namespace app\common\controller;
 
 use EasyWeChat\Kernel\Exceptions\{BadRequestException, InvalidArgumentException, InvalidConfigException};
 use ReflectionException;
+use Shiroi\ThinkReflectionAnnotation\reflection\Factory;
 use Symfony\Component\HttpFoundation\Response;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -39,8 +40,23 @@ class TestController extends CommonBaseController
         $this->initWechat();
     }
 
+    public function testReflection()
+    {
+        $factory = Factory::getInstance(new ClassHandle());
+        dd($factory->getMethodsDocComment());
+
+    }
+
+    public function testCurl()
+    {
+        $result = curl_http('https://kjapi.98809.com/qbox_api/v1/categories/get_qbox?appid=kuaitiku_wxapp&_appid=kuaitiku_wxapp&app_id=kuaitiku_wxapp&_os=1&_v=5.8.12&_t=1694682536170&platform=wxapp&org_id=2&schId=2&pschId=14&second_category_id=775')->getResponse();
+        dd($result);
+    }
+
     public function testCreateClass()
     {
+        $className = 'Test1Controller';
+        $nameSpace = '\app\common\controller';
         $createClass = new ClassHandle();
         $createClass
             //设置默认set方法内容
@@ -60,12 +76,15 @@ class TestController extends CommonBaseController
                 ],
                 'age' => 'int'
             ], [
+                'description' => '这是一个测试方法',
                 'content' => 'echo "姓名：{$name}，年龄：{$age}";'
             ])
             ->setProperty('property_1', 'string', '', [
+                'description' => '这是个属性',
                 'access' => 'private'
             ], [
                 'gg' => [
+                    'description' => '这是一个gg方法',
                     'argument' => false, //是否保留参数
                     'return' => 'self',
                     'content' => 'return $this;',
@@ -75,7 +94,11 @@ class TestController extends CommonBaseController
                 'get',
                 'set'
             ])
-            ->create('Test1Controller', 'app/common/controller');
+            ->create('Test1Controller', 'app\common\controller');
+
+        //跟反射类连贯使用
+        $factory = Factory::getInstance('\app\common\controller\Test1Controller');
+        dd($factory->getMethodsDocComment());
     }
 
     /**

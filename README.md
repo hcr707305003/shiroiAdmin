@@ -319,14 +319,17 @@ php think reset:admin_password --uid=1 123456
             ],
             'age' => 'int'
         ], [
+            'description' => '这是一个测试方法', //设置方法注释
             'content' => 'echo "姓名：{$name}，年龄：{$age}";' //设置方法内容
         ])
         //设置属性
         ->setProperty('property_1', 'string', '', [
+            'description' => '这是个属性', //设置属性描述
             'access' => 'private' //设置属性访问权限
         ], [
             //设置自定义方法
             'test' => [
+                'description' => '这是一个testProperty_1方法', //设置方法描述
                 'argument' => false, //是否保留参数
                 'return' => 'self', //是否保留返回值
                 'content' => 'return $this;', //设置方法内容
@@ -338,4 +341,24 @@ php think reset:admin_password --uid=1 123456
         ])
         //设置类名以及命名空间
         ->create('Test1Controller', 'app/common/controller');
+    ```
+    
+    #### 12. 反射类获取类的属性、方法、注释等 （[来源-shiroi/think-reflection-annotation](https://packagist.org/packages/shiroi/think-reflection-annotation)）
+    ```php
+    //实例化反射类
+    $factory = \Shiroi\ThinkReflectionAnnotation\reflection\Factory::getInstance($class);
+    //反射类(类的详情、包含私有方法、私有属性)
+    var_dump($factory->getClassSubject());
+    
+    //反射类的方法
+    var_dump($factory->getMethodsSubject());
+    
+    //反射类的属性
+    var_dump($factory->getPropertiesSubject());
+    
+    //反射类的doc
+    var_dump($factory->getClassDocComment());
+    
+    //反射类的方法doc
+    var_dump($factory->getMethodsDocComment());
     ```
