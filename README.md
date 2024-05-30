@@ -1,6 +1,9 @@
 # shiroi_admin
 基于`ThinkPHP6.0`+`AdminLTE3.2`的后台管理系统
 
+## 相似项目
+ [shiroiWebman-基于当前项目提升速度](https://github.com/hcr707305003/shiroiWebman)
+
 ## 安装步骤
   - ### 复制`env`文件
   ```shell
